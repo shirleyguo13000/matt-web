@@ -1,5 +1,142 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@300;400;500;600;700&family=Noto+Serif+Display:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Cormorant+SC:wght@300;400;500;600;700&family=Noto+Serif+Display:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
 
 body {
-  font-family: "Noto Serif Display";
+  font-family: "Playfair Display";
+  color: #fafaff;
+  margin: 0 auto;
+  background-image: url("/Users/shirleyguo/Documents/dev/matt-web/src/assets/gvz-42-RyoPLIFEI7c-unsplash.jpg");
+  background-size: cover;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(218, 221, 216, 0.25);
+  padding: 1rem 2rem;
+}
+
+nav ul {
+  display: flex;
+  list-style-type: none;
+  gap: 3rem;
+}
+
+nav a {
+  text-decoration: none;
+  font-family: "Cormorant SC";
+  font-size: 1.5rem;
+  color: inherit;
+  transition: color 0.25s ease;
+}
+
+nav a:hover {
+  color: #daddd8;
+}
+
+.logo a {
+  font-family: "Playfair Display";
+  justify-content: space-between;
+}
+
+.logo {
+  letter-spacing: 2px;
+  color: #fafaff;
+  font-family: "Cinzel";
+  font-size: 2rem;
+}
+
+.portrait-one {
+  display: block;
+  margin: auto;
+  max-width: 500px;
+  border-radius: 13px;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.5),
+    0 12px 32px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(238, 240, 242, 0.1);
+}
+
+.home-h1 {
+  text-align: center;
+  font-size: 3rem;
+  letter-spacing: 1.2px;
+  font-weight: 400;
+  margin-top: 4rem;
+  font-family: "Cormorant SC";
+  color: #fafaff;
+}
+
+.headline {
+  text-align: center;
+  font-size: 1.3rem;
+  margin-bottom: 3rem;
+  font-family: "Cormorant SC";
+  color: #daddd8;
+}
+
+.home-p {
+  text-align: center;
+  margin: 2rem;
+  color: inherit;
+  margin-bottom: 4rem;
+}
+
+.button-grid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 6rem;
+  margin-bottom: 8rem;
+}
+
+.home-btn {
+  border: 1px solid #daddd8;
+  border-radius: 5px;
+  font-family: "Cormorant SC";
+  font-size: 1.2rem;
+  width: 175px;
+  background: none;
+  color: #fafaff;
+  padding: 1.3rem;
+  transition: all 0.25s ease;
+}
+
+.home-btn:hover {
+  background-color: #fafaff;
+  border-color: #fafaff;
+  color: #1c1c1c;
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.04);
+  border-top: 1px solid rgba(218, 221, 216, 0.25);
+  padding: 1rem 2rem;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  padding: 3rem 0;
+}
+
+.social-icons a {
+  color: #fafaff;
+  font-size: 2.5rem;
+  display: flex;
+  align-items: center;
+  transition:
+    opacity 0.2s ease,
+    color 0.2s ease;
+}
+
+.social-icons a:hover {
+  color: #daddd8;
+  opacity: 0.85;
 }
