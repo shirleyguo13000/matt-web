@@ -1,78 +1,164 @@
-@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Cormorant+SC:wght@300;400;500;600;700&family=Noto+Serif+Display:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Cormorant+SC:wght@300;400;500;600;700&family=Mea+Culpa&family=Noto+Serif+Display:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
+
+:root {
+  --ink: #0c0c10;
+  --paper: #fafaff;
+  --muted: rgba(250, 250, 255, 0.62);
+  --rule: rgba(250, 250, 255, 0.14);
+  --brass: #c9a86a;
+
+  --font-display: "Noto Serif Display", serif;
+  --font-label: "Cormorant SC", serif;
+  --font-body: "Cormorant Garamond", Georgia, serif;
+  --font-script: "Mea Culpa", cursive;
+  --font-logo: "Cinzel", serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* UNIVERSAL */
 
 body {
-  font-family: "Playfair Display";
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+  position: relative;
   color: #fafaff;
   margin: 0 auto;
   background-image: url("/Users/shirleyguo/Documents/dev/matt-web/src/assets/gvz-42-RyoPLIFEI7c-unsplash.jpg");
   background-size: cover;
 }
 
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  /* background-image: url("/Users/shirleyguo/Documents/dev/matt-web/src/assets/gvz-42-RyoPLIFEI7c-unsplash.jpg"); */
+  background-size: cover;
+  background-position: center;
+  opacity: 0.35;
+  z-index: -2;
+}
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(12, 12, 16, 0.55) 0%,
+    rgba(12, 12, 16, 0.92) 60%
+  );
+  z-index: -1;
+}
+
+/* NAV BAR */
+
 nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid rgba(218, 221, 216, 0.25);
   padding: 1rem 2rem;
 }
 
 nav ul {
   display: flex;
   list-style-type: none;
-  gap: 3rem;
+  gap: 1.3rem;
+}
+/* nav ul li::after {
+  content: "|";
+  margin-left: 0.5rem;
+  color: #ccc;
 }
 
+nav ul li:first-child::before {
+  content: "|";
+  margin-right: 0.5rem;
+  color: #ccc;
+} */
+
 nav a {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 2px;
   text-decoration: none;
-  font-family: "Cormorant SC";
-  font-size: 1.5rem;
-  color: inherit;
-  transition: color 0.25s ease;
+  color: var(--paper);
+  font-family: var(--font-label);
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
 }
 
 nav a:hover {
-  color: #daddd8;
+  color: #c9a86a;
 }
 
-.logo a {
-  font-family: "Playfair Display";
-  justify-content: space-between;
+nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s cubic-bezier(0.7, 0, 0.2, 1);
+}
+nav a:hover::after,
+nav a.active::after {
+  transform: scaleX(1);
+}
+nav a.active {
+  color: #c9a86a;
 }
 
 .logo {
+  font-family: "Playfair Display";
+  justify-content: space-between;
   letter-spacing: 2px;
   color: #fafaff;
   font-family: "Cinzel";
   font-size: 2rem;
 }
 
-.portrait-one {
-  display: block;
-  margin: auto;
-  max-width: 500px;
-  border-radius: 13px;
-  box-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.5),
-    0 12px 32px rgba(0, 0, 0, 0.6),
-    0 0 0 1px rgba(238, 240, 242, 0.1);
+.logo:hover {
+  transform: none;
+  transition: none;
 }
+
+/* home page */
 
 .home-h1 {
   text-align: center;
-  font-size: 3rem;
-  letter-spacing: 1.2px;
-  font-weight: 400;
-  margin-top: 4rem;
-  font-family: "Cormorant SC";
-  color: #fafaff;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 200;
+  font-size: clamp(3rem, 8vw, 6.5rem);
+  letter-spacing: -0.015em;
+  line-height: 0.95;
+  margin: 12rem 0 3rem 0;
 }
 
 .headline {
+  font-family: var(--font-label);
+  font-size: 0.8rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 1.25rem;
   text-align: center;
-  font-size: 1.3rem;
-  margin-bottom: 3rem;
-  font-family: "Cormorant SC";
-  color: #daddd8;
 }
 
 .home-p {
@@ -80,6 +166,8 @@ nav a:hover {
   margin: 2rem;
   color: inherit;
   margin-bottom: 4rem;
+  font-family: (var(--font-body));
+  font-weight: 200;
 }
 
 .button-grid {
@@ -108,6 +196,62 @@ nav a:hover {
   border-color: #fafaff;
   color: #1c1c1c;
 }
+
+.about-word {
+  margin-top: 15rem;
+  margin-bottom: -3rem;
+  font-family: "Cormorant SC";
+  text-align: center;
+}
+
+.scroll-arrow {
+  display: flex;
+  justify-content: center;
+  width: 32px;
+  margin: 3rem auto 1.5rem;
+  color: #999;
+  transition: color 0.2s ease;
+}
+
+.about-hover:hover {
+  color: #c9a86a;
+}
+
+/* about page  */
+
+.portrait-one {
+  top: 6rem;
+  display: block;
+  width: 100%;
+  max-width: 280px;
+  margin: 0 auto;
+  border: none;
+  border-radius: 2px;
+  filter: grayscale(15%) contrast(1.05);
+  box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.7);
+}
+
+.bio {
+  display: block;
+  margin: 5rem 17rem 13rem 17rem;
+}
+
+.drop-cap {
+  float: left;
+  font-family: "Mea Culpa", serif;
+  font-size: 6rem;
+  line-height: 0.8;
+  padding-right: 0.8rem;
+  padding-top: 0.2rem;
+}
+
+.lede {
+  font-family: "Cormorant SC", serif;
+  font-size: 1.7rem;
+  letter-spacing: 1px;
+}
+
+/* footer */
 
 footer {
   display: flex;
