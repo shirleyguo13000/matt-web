@@ -20,6 +20,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-snap-type: y proximity;
 }
 
 /* UNIVERSAL */
@@ -65,10 +66,17 @@ body::after {
 /* NAV BAR */
 
 nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 30;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
+  background: rgba(12, 12, 16, 0.75);
+  backdrop-filter: blur(8px);
 }
 
 nav ul {
@@ -121,7 +129,7 @@ nav a.active::after {
   transform: scaleX(1);
 }
 nav a.active {
-  color: #c9a86a;
+  color: var(--brass);
 }
 
 .logo {
@@ -138,7 +146,92 @@ nav a.active {
   transition: none;
 }
 
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 32px;
+  height: 32px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 20;
+}
+
+.hamburger span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--paper);
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
+}
+.hamburger span:nth-child(1) {
+  transform-origin: top left;
+}
+.hamburger span:nth-child(3) {
+  transform-origin: bottom left;
+}
+.hamburger.open span:nth-child(1) {
+  transform: rotate(45deg) translate(4px, 4px);
+}
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.open span:nth-child(3) {
+  transform: rotate(-45deg) translate(4px, -4px);
+}
+
+@media (max-width: 750px) {
+  .hamburger {
+    display: flex;
+  }
+
+  nav ul {
+    position: fixed;
+    inset: 0;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2.5rem;
+    background: var(--ink);
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.7, 0, 0.2, 1);
+    z-index: 10;
+  }
+
+  nav ul.open {
+    transform: translateX(0);
+  }
+
+  nav a {
+    font-size: 1.1rem;
+  }
+}
+
 /* home page */
+.home-page-body {
+  width: 100%;
+  height: calc(100dvh - 4.5rem);
+  margin-top: 4.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1.5rem;
+  overflow: hidden;
+}
+
+.home-title-div {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 
 .home-h1 {
   text-align: center;
@@ -148,7 +241,7 @@ nav a.active {
   font-size: clamp(3rem, 8vw, 6.5rem);
   letter-spacing: -0.015em;
   line-height: 0.95;
-  margin: 12rem 0 3rem 0;
+  margin: 0 0 1.5rem 0;
 }
 
 .headline {
@@ -179,27 +272,8 @@ nav a.active {
   margin-bottom: 8rem;
 }
 
-.home-btn {
-  border: 1px solid #daddd8;
-  border-radius: 5px;
-  font-family: "Cormorant SC";
-  font-size: 1.2rem;
-  width: 175px;
-  background: none;
-  color: #fafaff;
-  padding: 1.3rem;
-  transition: all 0.25s ease;
-}
-
-.home-btn:hover {
-  background-color: #fafaff;
-  border-color: #fafaff;
-  color: #1c1c1c;
-}
-
 .about-word {
-  margin-top: 15rem;
-  margin-bottom: -3rem;
+  margin: 0 0 0.5rem 0;
   font-family: "Cormorant SC";
   text-align: center;
 }
@@ -217,23 +291,62 @@ nav a.active {
   color: #c9a86a;
 }
 
+.about-transition {
+  display: block;
+  text-align: center;
+  margin-top: 0; /* no longer needed — hero-center's flex: 1 handles the push */
+}
+
 /* about page  */
+hr.solid {
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0.75),
+    rgba(255, 255, 255, 0)
+  );
+  scroll-snap-align: start;
+}
+.bio {
+  display: block;
+  max-width: 80%;
+  margin: 5rem auto 13rem auto;
+}
+
+.about-page-title {
+  font-family: "Cormorant SC";
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  font-size: 1rem;
+  color: var(--muted);
+  margin: 8rem 0 3rem 0;
+}
+
+.hairline {
+  display: block;
+  width: 1px;
+  height: 60px;
+  margin: 5rem auto 6rem;
+  background: linear-gradient(to bottom, rgba(250, 250, 255, 0.6), transparent);
+}
 
 .portrait-one {
-  top: 6rem;
+  float: left;
   display: block;
   width: 100%;
-  max-width: 280px;
-  margin: 0 auto;
+  max-width: 260px;
+  margin: 0.3rem 2.5rem 1.5rem 0;
   border: none;
   border-radius: 2px;
   filter: grayscale(15%) contrast(1.05);
   box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.7);
 }
 
-.bio {
-  display: block;
-  margin: 5rem 17rem 13rem 17rem;
+.bio-text p:first-child {
+  margin-top: 0;
 }
 
 .drop-cap {
@@ -249,6 +362,32 @@ nav a.active {
   font-family: "Cormorant SC", serif;
   font-size: 1.7rem;
   letter-spacing: 1px;
+}
+
+.home-btn {
+  border: none;
+  border-radius: 5px;
+  font-family: "Cormorant SC";
+  font-size: 1.2rem;
+  width: 175px;
+  background: none;
+  color: #fafaff;
+  padding: 1.3rem;
+  transition: all 0.25s ease;
+  margin: 0 8rem 10rem;
+}
+
+.home-btn:hover {
+  background-color: #fafaff;
+  border-color: #fafaff;
+  color: #1c1c1c;
+}
+
+.home-btn-div {
+  display: flex;
+  justify-content: center; /* Horizontally centers the button */
+  align-items: center; /* Vertically centers the button */
+  height: 100%;
 }
 
 /* footer */

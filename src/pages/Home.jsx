@@ -3,9 +3,31 @@ import { Link } from "react-router-dom";
 function Home() {
   return (
     <div>
-      <div>
-        <h1 className="home-h1">Matthew So</h1>
-        <p className="headline">Bassoonist | Oboist | Pianist | Educator</p>
+      <div className="home-page-body">
+        <div className="home-title-div">
+          <h1 className="home-h1">Matthew So</h1>
+          <p className="headline">Bassoonist | Oboist | Pianist | Educator</p>
+        </div>
+        <div className="about-transition">
+          <Link
+            to="#about"
+            className="scroll-arrow about-hover"
+            aria-label="Go to About page"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              width="32"
+              height="32"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M6 10l6 6 6-6" />
+            </svg>
+          </Link>
+        </div>
         {/* <img
         src="src/assets/Screenshot_20260507-151346.jpg"
         alt="portrait of Matthew So"
@@ -20,36 +42,16 @@ function Home() {
         <button className="home-btn home-btn2">Book a lesson</button>
       </div> */}
       </div>
-      <div className="about-transition">
-        <p className="about-word about-hover">About</p>
-
-        <Link
-          to="/About"
-          className="scroll-arrow about-hover"
-          aria-label="Go to About page"
-        >
-          <svg
-            viewBox="0 0 24 24"
-            width="32"
-            height="32"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M6 10l6 6 6-6" />
-          </svg>
-          <div className="page-divider"></div>
-        </Link>
-      </div>
       {/* -------------------add a page divider line here----------- */}
-      <div className="bio">
-        <img
+      <hr class="solid"></hr>
+      <div className="bio" id="about">
+        <p className="about-page-title">About</p>
+        <span class="hairline" aria-hidden />
+        {/* <img
           src="src/assets/Screenshot_20260507-151346.jpg"
           alt="portrait of Matthew So"
           className="portrait-one"
-        />
+        /> */}
         <div className="bio-text">
           <p>
             <span className="drop-cap">R</span>
@@ -71,9 +73,7 @@ function Home() {
           <p>
             In addition to his freelance orchestral career, Matthew is an avid
             chamber musician and a two-time consecutive winner of the Fuchs
-            Chamber Competition. As a member of the winning ensemble, he
-            performed Poulenc's Sextet, FP 100 and Valerie Coleman's Afro-Cuban
-            Concerto at the winners' concert.
+            Chamber Competition.
           </p>
 
           <p>
@@ -101,6 +101,10 @@ function Home() {
             saxophone, and piano.
           </p>
         </div>
+      </div>
+      <div className="home-btn-div">
+        <button className="home-btn">Listen</button>
+        <button className="home-btn">Contact</button>
       </div>
     </div>
   );

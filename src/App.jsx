@@ -1,8 +1,8 @@
+import { useState } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import { FaLinkedin, FaFacebook } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import Home from "./pages/Home.jsx";
-import About from "./pages/About";
 import Listen from "./pages/Listen.jsx";
 import Calendar from "./pages/Calendar.jsx";
 import Contact from "./pages/Contact.jsx";
@@ -10,35 +10,61 @@ import Lessons from "./pages/Lessons.jsx";
 import "./App.css";
 
 function App() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const closeMenu = () => setMenuOpen(false);
+
   return (
     <div>
       <nav>
         <div>
-          <Link to="/" className="logo">
+          <Link to="/" className="logo" onClick={closeMenu}>
             Matthew So
           </Link>
         </div>
-        <ul>
+
+        <button
+          className="hamburger"
+          onClick={() => setMenuOpen((prev) => !prev)}
+          aria-label="Toggle navigation menu"
+          aria-expanded={menuOpen}
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <ul className={menuOpen ? "open" : ""}>
           <li>
-            <Link to="/About">About</Link>
+            <Link to="/#about" onClick={closeMenu}>
+              About
+            </Link>
           </li>
           <li>
-            <Link to="/Listen">Listen</Link>
+            <Link to="/Listen" onClick={closeMenu}>
+              Listen
+            </Link>
           </li>
           <li>
-            <Link to="/Calendar">Calendar</Link>
+            <Link to="/Calendar" onClick={closeMenu}>
+              Calendar
+            </Link>
           </li>
           <li>
-            <Link to="/Lessons">Lessons</Link>
+            <Link to="/Lessons" onClick={closeMenu}>
+              Lessons
+            </Link>
           </li>
           <li>
-            <Link to="/Contact">Contact</Link>
+            <Link to="/Contact" onClick={closeMenu}>
+              Contact
+            </Link>
           </li>
         </ul>
       </nav>
+
       <Routes className="links">
         <Route path="/" element={<Home />} />
-        <Route path="/About" element={<About />} />
         <Route path="/Listen" element={<Listen />} />
         <Route path="/Calendar" element={<Calendar />} />
         <Route path="/Lessons" element={<Lessons />} />
