@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import { FaLinkedin, FaFacebook } from "react-icons/fa";
@@ -35,11 +36,6 @@ function App() {
         </button>
 
         <ul className={menuOpen ? "open" : ""}>
-          <li>
-            <Link to="/#about" onClick={closeMenu}>
-              About
-            </Link>
-          </li>
           <li>
             <Link to="/Listen" onClick={closeMenu}>
               Listen

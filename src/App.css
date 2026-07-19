@@ -75,8 +75,16 @@ nav {
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
+}
+
+nav::before {
+  content: "";
+  position: absolute;
+  inset: 0;
   background: rgba(12, 12, 16, 0.75);
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
+  z-index: -1;
 }
 
 nav ul {
@@ -84,17 +92,6 @@ nav ul {
   list-style-type: none;
   gap: 1.3rem;
 }
-/* nav ul li::after {
-  content: "|";
-  margin-left: 0.5rem;
-  color: #ccc;
-}
-
-nav ul li:first-child::before {
-  content: "|";
-  margin-right: 0.5rem;
-  color: #ccc;
-} */
 
 nav a {
   position: relative;
@@ -212,7 +209,7 @@ nav a.active {
   }
 }
 
-/* home page */
+/* --------------------  home page ------------------------*/
 .home-page-body {
   width: 100%;
   height: calc(100dvh - 4.5rem);
@@ -297,7 +294,7 @@ nav a.active {
   margin-top: 0; /* no longer needed — hero-center's flex: 1 handles the push */
 }
 
-/* about page  */
+/* ---------------------  about page  -------------------*/
 hr.solid {
   border: 0;
   height: 1px;
@@ -333,7 +330,7 @@ hr.solid {
   background: linear-gradient(to bottom, rgba(250, 250, 255, 0.6), transparent);
 }
 
-.portrait-one {
+/* .portrait-one {
   float: left;
   display: block;
   width: 100%;
@@ -343,7 +340,7 @@ hr.solid {
   border-radius: 2px;
   filter: grayscale(15%) contrast(1.05);
   box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.7);
-}
+} */
 
 .bio-text p:first-child {
   margin-top: 0;
@@ -374,22 +371,78 @@ hr.solid {
   color: #fafaff;
   padding: 1.3rem;
   transition: all 0.25s ease;
-  margin: 0 8rem 10rem;
 }
 
 .home-btn:hover {
-  background-color: #fafaff;
-  border-color: #fafaff;
+  background-color: #c9a86a;
+  border-color: #c9a86a;
   color: #1c1c1c;
 }
 
 .home-btn-div {
   display: flex;
-  justify-content: center; /* Horizontally centers the button */
-  align-items: center; /* Vertically centers the button */
-  height: 100%;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(0.75rem, 3vw, 1.5rem);
+  margin-top: clamp(2rem, 8vw, 3rem);
+  margin-bottom: clamp(4rem, 10vw, 8rem);
 }
 
+/* -----------------  listen page ------------------ */
+.listen-parent-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 clamp(1.25rem, 5vw, 4rem);
+}
+
+.listen-h1 {
+  text-align: center;
+  margin-top: clamp(6rem, 15vh, 10rem);
+  font-family: "Cormorant SC";
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 200;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+}
+
+.video {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  max-width: 700px;
+  margin: clamp(2rem, 6vw, 5rem) auto;
+  margin-top: 0;
+}
+
+.video iframe {
+  width: 100%;
+  max-width: 560px;
+  aspect-ratio: 560 / 315;
+  height: auto;
+  border-radius: 4px;
+}
+
+.video p {
+  margin-top: 1.5rem;
+  font-size: clamp(0.9rem, 1.5vw, 1.05rem);
+  max-width: 500px;
+}
+
+.listen-italics {
+  font-style: italic;
+}
+
+@media (max-width: 450px) {
+  .video {
+    margin-bottom: 7rem;
+  }
+}
 /* footer */
 
 footer {
@@ -399,6 +452,7 @@ footer {
   background: rgba(255, 255, 255, 0.04);
   border-top: 1px solid rgba(218, 221, 216, 0.25);
   padding: 1rem 2rem;
+  margin: 1rem 0 0;
 }
 
 .social-icons {
@@ -420,6 +474,6 @@ footer {
 }
 
 .social-icons a:hover {
-  color: #daddd8;
+  color: #c9a86a;
   opacity: 0.85;
 }

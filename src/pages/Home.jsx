@@ -46,6 +46,7 @@ function Home() {
       <hr class="solid"></hr>
       <div className="bio" id="about">
         <p className="about-page-title">About</p>
+        <span class="hairline" aria-hidden />
         {/* <img
           src="src/assets/Screenshot_20260507-151346.jpg"
           alt="portrait of Matthew So"
@@ -102,8 +103,12 @@ function Home() {
         </div>
       </div>
       <div className="home-btn-div">
-        <button className="home-btn">Listen</button>
-        <button className="home-btn">Contact</button>
+        <Link to="/Listen">
+          <button className="home-btn">Listen</button>
+        </Link>
+        <Link to="/Contact">
+          <button className="home-btn">Contact</button>
+        </Link>
       </div>
     </div>
   );
