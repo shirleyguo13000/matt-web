@@ -43,10 +43,10 @@ function Home() {
       </div> */}
       </div>
       {/* -------------------add a page divider line here----------- */}
-      <hr class="solid"></hr>
+      <hr className="solid"></hr>
       <div className="bio" id="about">
         <p className="about-page-title">About</p>
-        <span class="hairline" aria-hidden />
+        <span className="hairline" aria-hidden />
         {/* <img
           src="src/assets/Screenshot_20260507-151346.jpg"
           alt="portrait of Matthew So"

@@ -426,16 +426,72 @@ hr.solid {
   aspect-ratio: 560 / 315;
   height: auto;
   border-radius: 4px;
+  box-shadow: 4px 5px 30px 8px #000000;
 }
 
 .video p {
   margin-top: 1.5rem;
   font-size: clamp(0.9rem, 1.5vw, 1.05rem);
   max-width: 500px;
+  box-shadow: 4px 5px 30px 8px #000000;
+  border-radius: 8px;
+  background-color: black;
 }
 
 .listen-italics {
   font-style: italic;
+}
+
+.hrefimg-wrapper {
+  position: relative;
+  display: inline-block;
+  max-width: 80%;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.hrefimg-wrapper::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 64px;
+  height: 64px;
+  transform: translate(-50%, -50%);
+  background-image: url("./assets/play\ -\ Edited.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.hrefimg-wrapper:hover::before {
+  opacity: 1;
+}
+
+.hrefimg-inner {
+  display: block;
+  width: 100%;
+  border-radius: 5px;
+}
+
+.hrefimg-wrapper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 5px;
+  box-shadow:
+    4px 5px 30px 8px #000000,
+    inset 3px 15px 34px 14px rgba(0, 0, 0, 0.93);
+  pointer-events: none;
+}
+
+.video h3 {
+  margin: 1rem 0 3rem 0;
+  font-weight: 600;
 }
 
 @media (max-width: 450px) {

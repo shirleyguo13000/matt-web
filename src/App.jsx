@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { useState } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import { FaLinkedin, FaFacebook } from "react-icons/fa";
@@ -8,6 +8,7 @@ import Listen from "./pages/Listen.jsx";
 import Calendar from "./pages/Calendar.jsx";
 import Contact from "./pages/Contact.jsx";
 import Lessons from "./pages/Lessons.jsx";
+import ScrollTop from "../src/ScrollTop.jsx";
 import "./App.css";
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
 
   return (
     <div>
+      <ScrollTop />
       <nav>
         <div>
           <Link to="/" className="logo" onClick={closeMenu}>
