@@ -63,6 +63,21 @@ body::after {
   z-index: -1;
 }
 
+/* ------ all h1 styling for every page */
+.listen-h1,
+.calendarh1,
+.lessonh1,
+.about-page-title,
+.contacth1 {
+  text-align: center;
+  margin-top: clamp(6rem, 15vh, 10rem);
+  font-family: "Cormorant SC";
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  font-weight: 200;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+}
+
 /* NAV BAR */
 
 nav {
@@ -312,16 +327,6 @@ hr.solid {
   margin: 5rem auto 13rem auto;
 }
 
-.about-page-title {
-  font-family: "Cormorant SC";
-  text-align: center;
-  text-transform: uppercase;
-  letter-spacing: 0.3em;
-  font-size: 1rem;
-  color: var(--muted);
-  margin: 8rem 0 3rem 0;
-}
-
 .hairline {
   display: block;
   width: 1px;
@@ -397,16 +402,6 @@ hr.solid {
   width: 100%;
   margin: 0 auto;
   padding: 0 clamp(1.25rem, 5vw, 4rem);
-}
-
-.listen-h1 {
-  text-align: center;
-  margin-top: clamp(6rem, 15vh, 10rem);
-  font-family: "Cormorant SC";
-  font-size: clamp(1.75rem, 4vw, 2.75rem);
-  font-weight: 200;
-  letter-spacing: 0.2em;
-  color: var(--muted);
 }
 
 .video {
@@ -499,6 +494,44 @@ hr.solid {
     margin-bottom: 7rem;
   }
 }
+
+/* -------------------- Calendar page ----------------------- */
+
+/* .calendarh1 {
+  text-align: center;
+  margin-top: clamp(6rem, 15vh, 10rem);
+  font-family: "Cormorant SC";
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  font-weight: 200;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+} */
+
+/* ------------------ Lessons page ------------------ */
+.lesson-parent-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 clamp(1.25rem, 5vw, 4rem);
+}
+
+.lesson-grid-parent {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+@media (max-width: 650px) {
+  .lesson-grid-parent {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* footer */
 
 footer {

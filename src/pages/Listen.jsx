@@ -44,7 +44,10 @@ function Listen() {
 
       <div className="video">
         <h3>Lillian Fuchs Chamber Music Competition Winners' Concert</h3>
-        <a href="https://www.msmnyc.edu/livestream/lillian-fuchs-chamber-music-winners-concert-2025-04-30/">
+        <a
+          href="https://www.msmnyc.edu/livestream/lillian-fuchs-chamber-music-winners-concert-2025-04-30/"
+          target="_blank"
+        >
           <div className="hrefimg-wrapper">
             <img
               src={msmlivestream2}
@@ -89,7 +92,10 @@ function Listen() {
 
       <div className="video">
         <h3>BÉLA BARTÓK, Concerto for Orchestra, Sz 116, BB123</h3>
-        <a href="https://www.msmnyc.edu/livestream/opus130-2024-09-18/">
+        <a
+          href="https://www.msmnyc.edu/livestream/opus130-2024-09-18/"
+          target="_blank"
+        >
           <div className="hrefimg-wrapper">
             <img
               src={msmlivestream1}

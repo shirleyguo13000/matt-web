@@ -1,8 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { Routes, Route, Link } from "react-router-dom";
-import { FaLinkedin, FaFacebook } from "react-icons/fa";
-import { MdEmail } from "react-icons/md";
+import { FaLinkedin, FaFacebook, FaYoutube } from "react-icons/fa";
 import Home from "./pages/Home.jsx";
 import Listen from "./pages/Listen.jsx";
 import Calendar from "./pages/Calendar.jsx";
@@ -72,7 +71,7 @@ function App() {
       <footer>
         <div className="social-icons">
           <a
-            href="https://www.linkedin.com/in/your-profile"
+            href="https://www.linkedin.com/in/matthew-so-364854218/"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="LinkedIn"
@@ -80,15 +79,20 @@ function App() {
             <FaLinkedin />
           </a>
           <a
-            href="https://www.facebook.com/your-profile"
+            href="https://www.facebook.com/matthew.so.33"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Facebook"
           >
             <FaFacebook />
           </a>
-          <a href="mailto:your-email@example.com" aria-label="Email">
-            <MdEmail />
+          <a
+            href="https://www.youtube.com/@matttbassoon"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Youtube"
+          >
+            <FaYoutube />
           </a>
         </div>
       </footer>
