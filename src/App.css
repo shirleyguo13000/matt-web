@@ -63,14 +63,14 @@ body::after {
   z-index: -1;
 }
 
-/* ------ all h1 styling for every page */
+/* ------ all h1 styling for every page----- */
 .listen-h1,
 .calendarh1,
 .lessonh1,
 .about-page-title,
 .contacth1 {
   text-align: center;
-  margin-top: clamp(6rem, 15vh, 10rem);
+  margin-top: clamp(10rem, 15vh, 12rem);
   font-family: "Cormorant SC";
   font-size: clamp(1.75rem, 4vw, 2.25rem);
   font-weight: 200;
@@ -331,21 +331,9 @@ hr.solid {
   display: block;
   width: 1px;
   height: 60px;
-  margin: 5rem auto 6rem;
+  margin: 4rem auto 4rem;
   background: linear-gradient(to bottom, rgba(250, 250, 255, 0.6), transparent);
 }
-
-/* .portrait-one {
-  float: left;
-  display: block;
-  width: 100%;
-  max-width: 260px;
-  margin: 0.3rem 2.5rem 1.5rem 0;
-  border: none;
-  border-radius: 2px;
-  filter: grayscale(15%) contrast(1.05);
-  box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.7);
-} */
 
 .bio-text p:first-child {
   margin-top: 0;
@@ -524,6 +512,49 @@ hr.solid {
   align-items: center;
   justify-content: center;
   text-align: center;
+}
+
+.lesson-card {
+  display: flex;
+  background-image: url("./assets/lesson\ card\ 2.jpeg");
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  margin: 0 1rem 1rem;
+  border-radius: 5px;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  box-shadow: 2px 18px 18px rgba(0, 0, 0, 0.64);
+}
+
+.lesson-card:hover {
+box-shadow: -1px 2px 29px 9px #c9a86a;
+}
+
+.lesson-card img {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.oboeimg {
+  object-position: top;
+}
+
+.lessontheory {
+  grid-column: 1/4;
+  align-items: center;
+  justify-content: center;
+  margin: 6rem 0;
+}
+
+.lesson-card h3 {
+  font-weight: 400;
+  font-family: "Cormorant SC";
+  letter-spacing: 0.4px;
+  margin-bottom: 3rem;
 }
 
 @media (max-width: 650px) {

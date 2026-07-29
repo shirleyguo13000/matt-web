@@ -7,7 +7,7 @@ import Listen from "./pages/Listen.jsx";
 import Calendar from "./pages/Calendar.jsx";
 import Contact from "./pages/Contact.jsx";
 import Lessons from "./pages/Lessons.jsx";
-import ScrollTop from "../src/ScrollTop.jsx";
+import ScrollTop from "./components/ScrollTop.jsx";
 import "./App.css";
 
 function App() {
