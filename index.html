@@ -50,27 +50,60 @@
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "Person",
-        "name": "Matthew So",
-        "url": "https://mattbassoon.com/",
-        "image": "https://mattbassoon.com/og-image.jpg",
-        "jobTitle": "Bassoonist, Oboist, Pianist and Educator",
-        "description": "Matthew So is a bassoonist, oboist, pianist and educator based in New York. Recordings and performances, upcoming concerts, and private lessons in bassoon, oboe, saxophone and piano.",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "New York",
-          "addressRegion": "NY",
-          "addressCountry": "US"
-        },
-        "alumniOf": [
-          { "@type": "CollegeOrUniversity", "name": "Manhattan School of Music" },
-          { "@type": "CollegeOrUniversity", "name": "McGill University" }
-        ],
-        "knowsAbout": ["Bassoon", "Oboe", "Piano", "Saxophone", "Chamber music", "Orchestral performance"],
-        "sameAs": [
-          "https://www.youtube.com/@matttbassoon",
-          "https://www.linkedin.com/in/matthew-so-364854218/",
-          "https://www.facebook.com/matthew.so.33"
+        "@graph": [
+          {
+            "@type": "Person",
+            "@id": "https://mattbassoon.com/#matthew-so",
+            "name": "Matthew So",
+            "url": "https://mattbassoon.com/",
+            "image": "https://mattbassoon.com/og-image.jpg",
+            "jobTitle": "Bassoonist, Oboist, Pianist and Educator",
+            "description": "Matthew So is a bassoonist, oboist, pianist and educator based in New York. Recordings and performances, upcoming concerts, and private lessons in bassoon, oboe, saxophone and piano.",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "New York",
+              "addressRegion": "NY",
+              "addressCountry": "US"
+            },
+            "workLocation": {
+              "@type": "Place",
+              "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "New York",
+                "addressRegion": "NY",
+                "addressCountry": "US"
+              }
+            },
+            "alumniOf": [
+              { "@type": "CollegeOrUniversity", "name": "Manhattan School of Music" },
+              { "@type": "CollegeOrUniversity", "name": "McGill University" }
+            ],
+            "knowsAbout": ["Bassoon", "Oboe", "Piano", "Saxophone", "Chamber music", "Orchestral performance"],
+            "sameAs": [
+              "https://www.youtube.com/@matttbassoon",
+              "https://www.linkedin.com/in/matthew-so-364854218/",
+              "https://www.facebook.com/matthew.so.33"
+            ]
+          },
+          {
+            "@type": "Service",
+            "@id": "https://mattbassoon.com/#lessons",
+            "name": "Private bassoon, oboe, saxophone and piano lessons",
+            "serviceType": [
+              "Bassoon lessons",
+              "Oboe lessons",
+              "Piano lessons",
+              "Saxophone lessons",
+              "Music theory and aural lessons"
+            ],
+            "url": "https://mattbassoon.com/Lessons",
+            "provider": { "@id": "https://mattbassoon.com/#matthew-so" },
+            "areaServed": [
+              { "@type": "City", "name": "New York City" },
+              { "@type": "AdministrativeArea", "name": "New York" }
+            ],
+            "audience": { "@type": "Audience", "audienceType": "Students of all levels" }
+          }
         ]
       }
     </script>

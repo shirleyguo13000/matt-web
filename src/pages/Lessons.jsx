@@ -13,7 +13,17 @@ function Lessons() {
         path="/Lessons"
       />
       <h1 className="lessonh1">Book a Lesson</h1>
+      <p className="lesson-subtitle">
+        Private bassoon, oboe, saxophone, and piano lessons in New York City
+      </p>
       <span className="hairline" aria-hidden />
+      <p className="lesson-intro">
+        Matthew maintains an active teaching studio in New York, offering
+        private instruction in bassoon, oboe, saxophone, and piano, alongside
+        music theory and aural training. He holds a Master&rsquo;s degree in
+        classical bassoon from the Manhattan School of Music, where he studied
+        under William Short, Principal Bassoon of the Metropolitan Opera.
+      </p>
       <div className="lesson-grid-parent">
         <div className="lesson-card lessonbsn">
           <h2>Bassoon</h2>
