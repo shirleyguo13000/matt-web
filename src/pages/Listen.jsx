@@ -1,10 +1,16 @@
 import { Link } from "react-router-dom";
 import msmlivestream1 from "../assets/msmlivestream1.webp";
 import msmlivestream2 from "../assets/msmlivestream2.webp";
+import PageMeta from "../components/PageMeta.jsx";
 
 function Listen() {
   return (
     <div className="listen-parent-div">
+      <PageMeta
+        title="Recordings & Performances | Matthew So"
+        description="Watch and listen to Matthew So perform: Jolivet’s Bassoon Concerto, Jeff Scott’s Elegy for Innocence, Shostakovich, Bartók and Poulenc chamber music."
+        path="/Listen"
+      />
       <h1 className="listen-h1">Recordings and Performances</h1>
       <span className="hairline" aria-hidden />
 

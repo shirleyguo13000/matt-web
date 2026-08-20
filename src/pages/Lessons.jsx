@@ -2,16 +2,26 @@ import bassoon from "../assets/bassoon.webp";
 import oboe from "../assets/oboe.webp";
 import piano from "../assets/piano.webp";
 import theory from "../assets/theory.webp";
+import PageMeta from "../components/PageMeta.jsx";
 
 function Lessons() {
   return (
     <div className="lesson-parent-div">
+      <PageMeta
+        title="Bassoon, Oboe & Piano Lessons in New York | Matthew So"
+        description="Private bassoon, oboe, piano and music theory lessons in New York with Matthew So, Manhattan School of Music graduate. Reed-making, technique and musicianship."
+        path="/Lessons"
+      />
       <h1 className="lessonh1">Book a Lesson</h1>
       <span className="hairline" aria-hidden />
       <div className="lesson-grid-parent">
         <div className="lesson-card lessonbsn">
           <h2>Bassoon</h2>
-          <img src={bassoon} alt="" fetchPriority="high" />
+          <img
+            src={bassoon}
+            alt="Close-up of a bassoon’s keywork and rosewood body"
+            fetchPriority="high"
+          />
           <p>
             More than on any other instrument, a bassoonist's success begins
             with the reed. A student can have flawless technique and beautiful
@@ -31,7 +41,11 @@ function Lessons() {
         </div>
         <div className="lesson-card lessonpno">
           <h2>Piano</h2>
-          <img src={piano} alt="" loading="lazy" />
+          <img
+            src={piano}
+            alt="Piano keyboard lit from above"
+            loading="lazy"
+          />
           <p>
             At the piano, the defining challenge is hand-eye coordination — our
             eyes having to read two lines of music to process rhythm and
@@ -52,7 +66,12 @@ function Lessons() {
         </div>
         <div className="lesson-card lessonoboe">
           <h2>Oboe</h2>
-          <img src={oboe} alt="" className="oboeimg" loading="lazy" />
+          <img
+            src={oboe}
+            alt="An oboe with its reed"
+            className="oboeimg"
+            loading="lazy"
+          />
           <p>
             Where the bassoon favors a wide and open air stream, the oboe
             demands the opposite: a narrower, more tightly controlled,
@@ -72,7 +91,12 @@ function Lessons() {
         </div>
         <div className="lesson-card lessontheory">
           <h2>Music Theory & Aural</h2>
-          <img src={theory} alt="" className="theoryimg" loading="lazy" />
+          <img
+            src={theory}
+            alt="Handwritten sheet music used for theory and aural training"
+            className="theoryimg"
+            loading="lazy"
+          />
         </div>
       </div>
       <a

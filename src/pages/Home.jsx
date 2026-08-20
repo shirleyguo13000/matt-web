@@ -1,9 +1,16 @@
 import { Link } from "react-router-dom";
 import ScrollFade from "../components/ScrollFade.jsx";
+import portrait from "../assets/portrait.webp";
+import PageMeta from "../components/PageMeta.jsx";
 
 function Home() {
   return (
     <div>
+      <PageMeta
+        title="Matthew So | Bassoonist, Oboist, Pianist & Educator"
+        description="Matthew So is a bassoonist, oboist, pianist and educator based in New York, performing orchestral and chamber music and teaching privately."
+        path="/"
+      />
       <div className="home-page-body">
         <div className="home-title-div">
           <h1 className="home-h1">Matthew So</h1>
@@ -32,8 +39,14 @@ function Home() {
       </div>
       <hr className="solid"></hr>
       <div className="bio" id="about">
-        <p className="about-page-title">About</p>
+        <h2 className="about-page-title">About</h2>
         <ScrollFade as="span" className="hairline" aria-hidden />
+        <img
+          src={portrait}
+          alt="Matthew So holding a bassoon"
+          className="bio-portrait"
+          loading="lazy"
+        />
         <div className="bio-text">
           <p>
             <span className="drop-cap">R</span>

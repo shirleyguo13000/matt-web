@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import PageMeta from "../components/PageMeta.jsx";
 
 const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const MONTHS = [
@@ -234,6 +235,11 @@ function Calendar() {
 
   return (
     <div className="calendar-parent-div">
+      <PageMeta
+        title="Upcoming Concerts | Matthew So"
+        description="Upcoming concerts and performances by bassoonist Matthew So in New York and beyond. Dates, venues and times."
+        path="/Calendar"
+      />
       <h1 className="calendarh1">Upcoming Concerts and Events</h1>
       <span className="hairline" aria-hidden />
 

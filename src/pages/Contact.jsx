@@ -1,5 +1,6 @@
 import { useState } from "react";
 import portrait from "../assets/portrait.webp";
+import PageMeta from "../components/PageMeta.jsx";
 
 const FORM_ENDPOINT = "https://formspree.io/f/xljrpybz";
 
@@ -71,6 +72,11 @@ function Contact() {
 
   return (
     <div className="contact-parent-div">
+      <PageMeta
+        title="Contact | Matthew So"
+        description="Get in touch with Matthew So to book a lesson, enquire about a performance or engagement, or ask a question."
+        path="/Contact"
+      />
       <h1 className="contacth1">Contact</h1>
       <span className="hairline" aria-hidden />
 
@@ -103,7 +109,7 @@ function Contact() {
           <div className="form-parent-grid">
             <img
               src={portrait}
-              alt=""
+              alt="Matthew So holding a bassoon"
               className="contact-portrait"
               fetchPriority="high"
             />
