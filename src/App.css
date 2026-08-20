@@ -6,6 +6,10 @@
   --muted: rgba(250, 250, 255, 0.62);
   --rule: rgba(250, 250, 255, 0.14);
   --brass: #c9a86a;
+  /* art deco frame on the contact form. the example's hue, darkened
+     from 80% to 47% lightness - at 80% it was 1.4:1 on the paper card
+     and effectively invisible */
+  --deco-border: hsl(40, 40%, 47%);
 
   --font-display: "Noto Serif Display", serif;
   --font-label: "Cormorant SC", serif;
@@ -37,7 +41,7 @@ body {
   position: relative;
   color: #fafaff;
   margin: 0 auto;
-  background-image: url("./assets/gvz-42-RyoPLIFEI7c-unsplash.jpg");
+  background-image: url("./assets/gvz-42-RyoPLIFEI7c-unsplash.webp");
   background-size: cover;
 }
 
@@ -224,6 +228,85 @@ nav a.active {
   }
 }
 
+/* ------------------ shared button treatment ------------------
+   no background at any point - the outline is an svg rect, so its
+   stroke can break into a travelling segment on hover, which a css
+   border cannot do */
+
+/* most of these are <Link>s rather than <button>s - navigation, not
+   actions - so the anchor needs the centring and line-height a
+   button gets for free, or it renders taller and left-aligned */
+.home-btn,
+.lessonbtn,
+.contactbtn,
+.listen-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: none;
+  font-family: "Cormorant SC";
+  font-size: 1.2rem;
+  line-height: normal;
+  text-align: center;
+  text-decoration: none;
+  width: 175px;
+  padding: 1.3rem;
+  color: var(--paper);
+  cursor: pointer;
+}
+
+.home-btn span,
+.lessonbtn span,
+.contactbtn span,
+.listen-btn span {
+  position: relative;
+  z-index: 2;
+}
+
+/* overflow: visible so the thicker hover stroke isn't clipped in
+   half at the edges; pointer-events: none so the overlay can't
+   swallow the hover or the click */
+.home-btn svg,
+.lessonbtn svg,
+.contactbtn svg,
+.listen-btn svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.home-btn rect,
+.lessonbtn rect,
+.contactbtn rect,
+.listen-btn rect {
+  fill: none;
+  stroke: var(--brass);
+  stroke-width: 0.75;
+  /* a dash longer than any button's perimeter with a zero gap reads
+     as a solid outline, and still interpolates to the hover dash */
+  stroke-dasharray: 1000, 0;
+  stroke-dashoffset: 0;
+  transition: all 0.35s linear;
+}
+
+/* the outline collapses into short segments that slide round the
+   perimeter - the dash pattern is deliberately shorter than the
+   480px perimeter so two segments land on opposite edges */
+.home-btn:hover rect,
+.lessonbtn:hover rect,
+.contactbtn:hover rect,
+.listen-btn:hover rect {
+  stroke-width: 2;
+  stroke-dasharray: 17, 352;
+  stroke-dashoffset: 55;
+  transition: all 1.35s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
 /* --------------------  home page ------------------------*/
 .home-page-body {
   width: 100%;
@@ -346,30 +429,18 @@ hr.solid {
   line-height: 0.8;
   padding-right: 0.8rem;
   padding-top: 0.2rem;
+  opacity: 0.85;
 }
 
 .lede {
   font-family: "Cormorant SC", serif;
   font-size: 1.7rem;
   letter-spacing: 1px;
+  opacity: 0.85;
 }
 
-.home-btn {
-  border: none;
-  border-radius: 5px;
-  font-family: "Cormorant SC";
-  font-size: 1.2rem;
-  width: 175px;
-  background: none;
-  color: #fafaff;
-  padding: 1.3rem;
-  transition: all 0.25s ease;
-}
-
-.home-btn:hover {
-  background-color: #c9a86a;
-  border-color: #c9a86a;
-  color: #1c1c1c;
+.bio-text p {
+  opacity: 0.8;
 }
 
 .home-btn-div {
@@ -419,6 +490,7 @@ hr.solid {
   box-shadow: 4px 5px 30px 8px #000000;
   border-radius: 8px;
   background-color: black;
+  opacity: 0.8;
 }
 
 .listen-italics {
@@ -483,7 +555,437 @@ hr.solid {
   }
 }
 
+/* ---- Listen page: the three links at the foot of the page ---- */
+.listen-btn-div {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: stretch;
+  gap: clamp(0.75rem, 2vw, 1.5rem);
+  width: 100%;
+  margin: clamp(2rem, 6vw, 4rem) 0 clamp(4rem, 10vw, 7rem);
+}
+
+/* flex: 1 1 0 overrides the shared 175px along the row, so the three
+   share a width and read as one set - these labels are longer than
+   the buttons elsewhere */
+.listen-btn {
+  flex: 1 1 0;
+  width: 100%;
+  max-width: 12rem;
+  padding: 1.3rem 1rem;
+  white-space: nowrap;
+}
+
+/* the row stays on one line here, but "Upcoming concerts" needs the
+   type to come down a little to fit three across */
+@media (max-width: 900px) {
+  .listen-btn {
+    font-size: 1.05rem;
+    padding: 1.15rem 0.75rem;
+  }
+}
+
+@media (max-width: 650px) {
+  .listen-btn-div {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  /* stacked, so flex-basis now governs height - width takes over */
+  .listen-btn {
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: 20rem;
+    font-size: 1.2rem;
+    padding: 1.3rem 1rem;
+  }
+}
+
 /* -------------------- Calendar page ----------------------- */
+
+.calendar-parent-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 0 clamp(1.25rem, 4vw, 3rem);
+}
+
+/* no fill anywhere - the calendar is drawn entirely in hairlines so the
+   page image stays visible through it */
+.calendar-page {
+  width: 100%;
+  max-width: 60rem;
+  margin-bottom: clamp(4rem, 10vw, 7rem);
+  background: none;
+}
+
+.calendar-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+}
+
+.calendar-head-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* the slot holds its height whether or not the button is in it, so the
+   month name doesn't jump every time you navigate a month */
+.calendar-today-slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 1.15rem;
+}
+
+/* only rendered once you've navigated off the current month, so it
+   fades in rather than just appearing */
+.calendar-today-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: "Cormorant SC";
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--brass);
+  cursor: pointer;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.25s ease;
+  animation: calendar-today-in 0.3s ease-out both;
+}
+
+.calendar-today-btn:hover {
+  border-bottom-color: var(--brass);
+}
+
+@keyframes calendar-today-in {
+  from {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .calendar-today-btn {
+    animation: none;
+  }
+}
+
+.calendar-month {
+  margin: 0;
+  font-family: "Cormorant SC";
+  font-size: clamp(1.1rem, 2.6vw, 1.5rem);
+  font-weight: 300;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--paper);
+}
+
+.calendar-month span {
+  color: var(--brass);
+}
+
+.calendar-nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: none;
+  border: 1px solid var(--rule);
+  color: var(--muted);
+  font-size: 1rem;
+  cursor: pointer;
+  transition:
+    border-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.calendar-nav:hover {
+  border-color: var(--brass);
+  color: var(--brass);
+}
+
+.calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  margin-bottom: 0.6rem;
+}
+
+.calendar-weekdays span {
+  text-align: center;
+  font-family: "Cormorant SC";
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* the outer edge. cells carry only right + bottom borders, so
+   adjacent cells never double up into a 2px line */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  border-top: 1px solid var(--rule);
+  border-left: 1px solid var(--rule);
+}
+
+.calendar-cell {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border-right: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  background: none;
+}
+
+/* the pad cells before the 1st and after the last - they hold the
+   rectangle square without inviting a click */
+.calendar-cell.is-empty {
+  background-image: linear-gradient(
+    to bottom right,
+    transparent 49.6%,
+    rgba(250, 250, 255, 0.05) 49.6% 50.4%,
+    transparent 50.4%
+  );
+}
+
+.calendar-day {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0.5rem 0.6rem;
+  font-family: var(--font-body);
+  color: var(--paper);
+  cursor: pointer;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.calendar-day:hover {
+  background-color: rgba(201, 168, 106, 0.1);
+  color: var(--brass);
+}
+
+.calendar-daynum {
+  font-size: clamp(0.85rem, 1.6vw, 1rem);
+  line-height: 1;
+  letter-spacing: 0.04em;
+}
+
+/* today: a brass ring on the number itself rather than a filled cell,
+   which would break the transparent treatment */
+.calendar-day.is-today .calendar-daynum {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.7rem;
+  height: 1.7rem;
+  margin: -0.35rem 0 0 -0.35rem;
+  border: 1px solid var(--brass);
+  border-radius: 50%;
+  color: var(--brass);
+}
+
+/* marks a day holding a concert: a filled brass corner in the top
+   right. a triangle built from borders rather than a background image,
+   so it stays crisp at any cell size */
+.calendar-event-corner {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-top: 0.9rem solid var(--brass);
+  border-left: 0.9rem solid transparent;
+}
+
+/* ---- the day popup ---- */
+.calendar-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: rgba(8, 8, 12, 0.72);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  animation: calendar-backdrop-in 0.25s ease-out both;
+}
+
+@keyframes calendar-backdrop-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* plain outline - the deco frame belongs to the contact card, and on a
+   small popup it was more ornament than the content needed. the shadow
+   is what separates it from the darkened page behind */
+.calendar-modal {
+  position: relative;
+  width: 100%;
+  max-width: 30rem;
+  padding: clamp(1.75rem, 4vw, 2.5rem);
+  background-color: var(--ink);
+  border: 1px solid var(--rule);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+  text-align: center;
+  animation: calendar-modal-in 0.28s cubic-bezier(0.19, 1, 0.22, 1) both;
+}
+
+@keyframes calendar-modal-in {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.calendar-modal-close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  width: 2rem;
+  height: 2rem;
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 0.25s ease;
+}
+
+.calendar-modal-close:hover {
+  color: var(--brass);
+}
+
+.calendar-modal-date {
+  margin: 0 0 1.5rem;
+  font-family: "Cormorant SC";
+  font-size: clamp(1rem, 2.4vw, 1.25rem);
+  font-weight: 300;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--brass);
+}
+
+.calendar-modal-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-align: left;
+}
+
+.calendar-modal-list li + li {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rule);
+}
+
+.calendar-modal-list h3 {
+  margin: 0 0 0.4rem;
+  font-family: "Cormorant SC";
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  color: var(--paper);
+}
+
+.calendar-modal-time {
+  margin: 0 0 0.15rem;
+  color: var(--brass);
+  font-family: "Cormorant SC";
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+}
+
+.calendar-modal-venue {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+  font-style: italic;
+}
+
+/* google returns descriptions with newlines, so keep them */
+.calendar-modal-desc {
+  margin: 0.6rem 0 0;
+  color: var(--paper);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  white-space: pre-line;
+}
+
+.calendar-status {
+  margin: 1.25rem 0 0;
+  text-align: center;
+  font-family: "Cormorant SC";
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.calendar-modal-empty {
+  margin: 0;
+  color: var(--muted);
+  font-style: italic;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .calendar-modal-backdrop,
+  .calendar-modal {
+    animation: none;
+  }
+}
+
+/* the squares get too small to read much below this, so let the cells
+   go a little taller than wide and drop the padding */
+@media (max-width: 650px) {
+  .calendar-cell {
+    aspect-ratio: 4 / 5;
+  }
+
+  .calendar-day {
+    padding: 0.35rem;
+    align-items: center;
+  }
+
+  .calendar-day.is-today .calendar-daynum {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin: 0;
+  }
+
+  .calendar-event-corner {
+    border-top-width: 0.7rem;
+    border-left-width: 0.7rem;
+  }
+}
+
+
 
 /* .calendarh1 {
   text-align: center;
@@ -496,6 +998,7 @@ hr.solid {
 } */
 
 /* ------------------ Lessons page ------------------ */
+
 .lesson-parent-div {
   display: flex;
   flex-direction: column;
@@ -516,7 +1019,7 @@ hr.solid {
 
 .lesson-card {
   display: flex;
-  background-image: url("./assets/lesson\ card\ 2.jpeg");
+  background-image: url("./assets/lesson_card_2.webp");
   background-size: cover;
   background-position: center;
   overflow: hidden;
@@ -526,15 +1029,38 @@ hr.solid {
   align-items: center;
   padding: 2rem;
   box-shadow: 2px 18px 18px rgba(0, 0, 0, 0.64);
+  transition: all 0.5s ease;
+  position: relative;
 }
 
 .lesson-card:hover {
-box-shadow: -1px 2px 29px 9px #c9a86a;
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #c9aa71;
+}
+
+.lesson-card::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(0deg, transparent, transparent 30%, #c9aa71);
+  transform: rotate(-45deg);
+  transition: all 0.5s ease;
+  opacity: 0;
+}
+
+.lesson-card:hover::before {
+  opacity: 1;
+  transform: rotate(-45deg) translateY(100%);
 }
 
 .lesson-card img {
-  width: 300px;
-  height: 300px;
+  width: 100%;
+  max-width: 300px;
+  aspect-ratio: 1 / 1;
+  height: auto;
   object-fit: cover;
   border-radius: 8px;
 }
@@ -544,7 +1070,7 @@ box-shadow: -1px 2px 29px 9px #c9a86a;
 }
 
 .lessontheory {
-  grid-column: 1/4;
+  grid-column: 1 / -1;
   align-items: center;
   justify-content: center;
   margin: 6rem 0;
@@ -557,9 +1083,565 @@ box-shadow: -1px 2px 29px 9px #c9a86a;
   margin-bottom: 3rem;
 }
 
+.lessonbtn {
+  margin-bottom: 6rem;
+}
+
+/* ---- Lessons page: tablet (two columns) ---- */
+@media (min-width: 901px) and (max-width: 1200px) {
+  .lesson-grid-parent {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* third instrument card sits alone on its row - center it
+     instead of leaving a gap on the right */
+  .lessonoboe {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: 100%;
+    max-width: 32rem;
+  }
+
+  .lessontheory {
+    margin: 5rem 0;
+  }
+}
+
+/* ---- Lessons page: small tablet (single centered column) ---- */
+@media (max-width: 900px) {
+  .lesson-grid-parent {
+    grid-template-columns: minmax(0, 36rem);
+  }
+
+  /* no longer a full-width banner here, so it keeps the same
+     side margins as the cards above it */
+  .lessontheory {
+    margin: 4rem 1rem;
+  }
+}
+
+/* ---- Lessons page: mobile (cards stack full width) ---- */
 @media (max-width: 650px) {
   .lesson-grid-parent {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
+    width: 100%;
+  }
+
+  .lesson-card {
+    margin: 0 0 1.5rem;
+    padding: 1.75rem 1.25rem;
+  }
+
+  .lesson-card h3 {
+    margin-bottom: 2rem;
+  }
+
+  .lessontheory {
+    margin: 2.5rem 0 1.5rem;
+  }
+
+  .lessonbtn {
+    margin-bottom: 4rem;
+  }
+}
+
+/* ---- Lessons page: no card hover on mobile/tablet ----
+   the scale overflows a full-width card, and on a touch screen the
+   hover state latches on after a tap and stays until you tap elsewhere.
+   the width query covers desktop browsers resized down; (hover: none)
+   covers touch devices wider than the breakpoint. */
+@media (max-width: 1200px), (hover: none) {
+  .lesson-card {
+    transition: none;
+  }
+
+  .lesson-card:hover {
+    transform: none;
+    box-shadow: 2px 18px 18px rgba(0, 0, 0, 0.64);
+  }
+
+  .lesson-card::before,
+  .lesson-card:hover::before {
+    display: none;
+  }
+}
+/* ------------------ Contact page ------------------ */
+
+/* no side padding here - the card sets its own gutters as a
+   percentage, so the page padding would fight it */
+.contact-parent-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+}
+
+/* fields flow down the left column; the portrait is pinned to the
+   right and spans all four of them */
+.form-parent-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: 1.5rem 2.5rem;
+}
+
+.contact-portrait {
+  grid-column: 2;
+  grid-row: 1 / span 4;
+  width: 100%;
+  height: 100%;
+  /* without this the image's intrinsic height sets a floor for the
+     rows it spans, and it would stretch the field column to match */
+  min-height: 0;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 5px;
+}
+
+/* sits inside the paper card now, so it takes the card's dark ink -
+   var(--muted) is built for the dark page and vanishes on white */
+.contact-intro {
+  max-width: 34rem;
+  margin: 0 auto;
+  text-align: center;
+  color: #4b4844;
+  font-family: "Cormorant Garamond";
+  font-size: 25px;
+  font-weight: 300;
+  opacity: 0.85;
+  letter-spacing: 0.14rem;
+  text-transform: uppercase;
+}
+
+.G {
+  max-width: 34rem;
+  margin: 0 auto;
+  text-align: center;
+  color: #3f3a34;
+  font-family: "Cormorant SC";
+  font-size: 35px;
+  font-weight: 500;
+  opacity: 0.85;
+}
+
+/* the form is the whole point of this page, so it sits on a solid
+   paper panel - the rest of the site is light-on-dark, this is the
+   one place that inverts, which is what makes it read as the
+   destination rather than another section */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  /* 78% of the viewport, so the gutters scale with the screen. the
+     cap still leaves a 1920 monitor at ~70% - past that, fields get
+     too wide to scan comfortably */
+  width: 78%;
+  max-width: 84rem;
+  margin-bottom: 7rem;
+  /* more breathing room left and right than top and bottom */
+  padding: clamp(2rem, 3vw, 3rem) clamp(2rem, 5vw, 4.5rem);
+  position: relative;
+  background-color: var(--paper);
+  /* square, not 5px - stepped deco corners on a rounded box read as
+     a mistake */
+  border: 1px solid var(--deco-border);
+  border-radius: 0;
+  box-shadow: 7px 2px 11px 6px #080601;
+  /* keeps the browser's own light-panel bits - autofill fill,
+     the textarea resize grip - on the same side as the card */
+  color-scheme: light;
+}
+
+/* ---- art deco corner frame ----
+   from the reference: at each corner a small stud, an outer line
+   stepped OUT from the card edge, and a jog crossing back in - the
+   interlocking step is the whole point of the design.
+
+   the proportions are locked together: the stud is half the step, its
+   offset is half the step, and every pseudo-element position is keyed
+   to the step. scaling one without the others (as I did before) breaks
+   the jog and it degenerates into a plain square. change --deco-step /
+   --deco-arm and the ornament scales as a piece. the -1px/-2px are
+   border-width corrections, not scale, so they stay fixed. */
+.contact-form {
+  --deco-step: 2rem;
+  --deco-arm: 6rem;
+}
+
+.deco-frame .corner {
+  position: absolute;
+  width: calc(var(--deco-step) / 2);
+  height: calc(var(--deco-step) / 2);
+  border: 1px solid var(--deco-border);
+}
+
+.deco-frame .corner::before,
+.deco-frame .corner::after {
+  content: "";
+  position: absolute;
+}
+
+/* the horizontal arm, plus the vertical jog on its inner end */
+.deco-frame .corner::after {
+  width: var(--deco-arm);
+  height: calc(var(--deco-step) - 1px);
+}
+
+/* the vertical arm, plus the horizontal jog on its inner end */
+.deco-frame .corner::before {
+  width: calc(var(--deco-step) - 1px);
+  height: var(--deco-arm);
+}
+
+.deco-frame .corner.left {
+  left: calc(var(--deco-step) / -2);
+}
+
+.deco-frame .corner.left::after {
+  left: calc(var(--deco-step) - 2px);
+  border-left: 1px solid var(--deco-border);
+}
+
+.deco-frame .corner.left::before {
+  left: -1px;
+  border-left: 1px solid var(--deco-border);
+}
+
+.deco-frame .corner.right {
+  right: calc(var(--deco-step) / -2);
+}
+
+.deco-frame .corner.right::after {
+  right: calc(var(--deco-step) - 2px);
+  border-right: 1px solid var(--deco-border);
+}
+
+.deco-frame .corner.right::before {
+  right: -1px;
+  border-right: 1px solid var(--deco-border);
+}
+
+.deco-frame .corner.top {
+  top: calc(var(--deco-step) / -2);
+}
+
+.deco-frame .corner.top::after {
+  top: -1px;
+  border-top: 1px solid var(--deco-border);
+}
+
+.deco-frame .corner.top::before {
+  top: calc(var(--deco-step) - 2px);
+  border-top: 1px solid var(--deco-border);
+}
+
+.deco-frame .corner.bottom {
+  bottom: calc(var(--deco-step) / -2);
+}
+
+.deco-frame .corner.bottom::after {
+  bottom: -1px;
+  border-bottom: 1px solid var(--deco-border);
+}
+
+.deco-frame .corner.bottom::before {
+  bottom: calc(var(--deco-step) - 2px);
+  border-bottom: 1px solid var(--deco-border);
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  grid-column: 1 / 2;
+  gap: 0.6rem;
+  text-align: left;
+}
+
+.form-field label {
+  font-family: "Cormorant Garamond";
+  font-size: 0.8rem;
+  font-weight: 100;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #5f5952;
+}
+
+.form-field .required {
+  color: #8a6a2f;
+  margin-left: 0.3rem;
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: #1c1c1c;
+  background-color: #ffffff;
+  border: 1px solid rgba(28, 28, 28, 0.2);
+  border-radius: 5px;
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.form-field input::placeholder,
+.form-field textarea::placeholder {
+  color: rgba(28, 28, 28, 0.62);
+  text-transform: lowercase;
+}
+
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+  outline: none;
+  border-color: var(--brass);
+  box-shadow: 0 0 0 3px rgba(201, 168, 106, 0.3);
+}
+
+/* appearance: none strips the native arrow, so draw a brass one -
+   deepened from --brass, which is too pale to read on white */
+.form-field select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 2.5rem;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath fill='none' stroke='%23a8874a' stroke-width='1.5' d='M1 1.5 6 6.5 11 1.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 0.7rem;
+}
+
+/* nothing chosen yet - the select is still :invalid, so the
+   "Select a reason" line reads as a placeholder */
+.form-field select:invalid {
+  color: rgba(28, 28, 28, 0.62);
+}
+
+.form-field textarea {
+  min-height: 9rem;
+  line-height: 1.6;
+  resize: vertical;
+}
+
+/* spans the full width under both columns, centered. the shared
+   treatment covers the look - this is placement, plus the ink rest
+   colour it needs against the paper card */
+.contactbtn {
+  grid-column: 1 / -1;
+  justify-self: center;
+  align-self: start;
+  margin-top: 3rem;
+  margin-bottom: 0;
+  color: #1c1c1c;
+}
+
+.contactbtn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* a disabled button shouldn't animate while sending */
+.contactbtn:disabled:hover rect {
+  stroke-width: 0.75;
+  stroke-dasharray: 1000, 0;
+  stroke-dashoffset: 0;
+}
+
+/* holds its height so the card doesn't jump when a message appears */
+.contact-status {
+  grid-column: 1 / -1;
+  min-height: 1.5rem;
+  margin: 0;
+  text-align: center;
+}
+
+.contact-status.success {
+  color: #8a6a2f;
+}
+
+.contact-status.error {
+  color: #a33a3a;
+}
+
+/* ---- Contact page: submit success ----
+   the card minimises away, then a brass circle draws itself, the
+   tick follows once the circle has closed, and the message settles
+   in last - staggered rather than simultaneous so it reads as one
+   gesture instead of three things happening at once */
+
+.contact-form.is-closing {
+  animation: contact-form-close 0.45s cubic-bezier(0.4, 0, 0.9, 0.3) forwards;
+  pointer-events: none;
+}
+
+@keyframes contact-form-close {
+  to {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+}
+
+.contact-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.25rem;
+  min-height: 45vh;
+  margin-bottom: 7rem;
+  padding: 0 1.5rem;
+  text-align: center;
+  animation: contact-success-in 0.5s ease-out both;
+}
+
+@keyframes contact-success-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.contact-success-mark {
+  width: clamp(4.5rem, 10vw, 6rem);
+  height: auto;
+  overflow: visible;
+}
+
+.contact-success-mark circle,
+.contact-success-mark path {
+  fill: none;
+  stroke: var(--brass);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* r=26 gives a circumference of ~163.4; rotating -90deg starts the
+   stroke at twelve o'clock instead of three */
+.contact-success-mark circle {
+  stroke-dasharray: 164;
+  stroke-dashoffset: 164;
+  transform: rotate(-90deg);
+  transform-origin: center;
+  animation: draw-circle 0.7s cubic-bezier(0.19, 1, 0.22, 1) 0.1s forwards;
+}
+
+/* the tick path measures ~34 units */
+.contact-success-mark path {
+  stroke-dasharray: 34;
+  stroke-dashoffset: 34;
+  animation: draw-tick 0.35s cubic-bezier(0.19, 1, 0.22, 1) 0.65s forwards;
+}
+
+@keyframes draw-circle {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes draw-tick {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.contact-success-text {
+  max-width: 32rem;
+  margin: 0;
+  font-family: "Cormorant SC";
+  font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+  font-weight: 300;
+  letter-spacing: 0.14em;
+  line-height: 1.7;
+  color: var(--paper);
+  opacity: 0;
+  animation: contact-success-text-in 0.5s ease-out 0.9s forwards;
+}
+
+@keyframes contact-success-text-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* the confirmation still has to land for anyone who has asked for
+   less motion - it just arrives already drawn */
+@media (prefers-reduced-motion: reduce) {
+  .contact-form.is-closing,
+  .contact-success,
+  .contact-success-text,
+  .contact-success-mark circle,
+  .contact-success-mark path {
+    animation: none;
+  }
+
+  .contact-success-text {
+    opacity: 1;
+  }
+
+  .contact-success-mark circle,
+  .contact-success-mark path {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ---- Contact page: portrait moves above the fields ---- */
+@media (max-width: 900px) {
+  /* single column now, so a wide card would just stretch the inputs -
+     take more of the screen but cap the line length */
+  .contact-form {
+    width: 86%;
+    max-width: 44rem;
+  }
+
+  .form-parent-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* back into the normal flow - it is first in the markup, so it
+     lands above the fields. capped on width rather than height:
+     a full-width box would crop this 3:4 portrait to a letterbox */
+  .contact-portrait {
+    grid-column: 1;
+    grid-row: auto;
+    justify-self: center;
+    width: 100%;
+    max-width: 20rem;
+    height: auto;
+    aspect-ratio: 3 / 4;
+  }
+}
+
+@media (max-width: 650px) {
+  /* narrow enough that gutters are wasted space - go near full width
+     and let the card's own padding do the spacing */
+  .contact-form {
+    width: 90%;
+    max-width: none;
+    gap: 1.4rem;
+    margin-bottom: 5rem;
+    padding: 1.75rem 1.5rem;
+  }
+
+  .contact-portrait {
+    max-width: 15rem;
+  }
+
+  .contactbtn {
+    width: 100%;
   }
 }
 

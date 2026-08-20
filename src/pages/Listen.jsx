@@ -1,6 +1,6 @@
-import React from "react";
-import msmlivestream1 from "../assets/msmlivestream1.png";
-import msmlivestream2 from "../assets/msmlivestream2.png";
+import { Link } from "react-router-dom";
+import msmlivestream1 from "../assets/msmlivestream1.webp";
+import msmlivestream2 from "../assets/msmlivestream2.webp";
 
 function Listen() {
   return (
@@ -108,6 +108,27 @@ function Listen() {
           Performed on Sept 18 2024 with MSM Orchestra Opus 130. Conducted by
           David Chen. <br /> Timestamp: 1:00:35
         </p>
+      </div>
+
+      <div className="listen-btn-div">
+        <Link to="/Calendar" className="listen-btn">
+          <span>Upcoming concerts</span>
+          <svg aria-hidden="true">
+            <rect x="0" y="0" width="100%" height="100%" />
+          </svg>
+        </Link>
+        <Link to="/Lessons" className="listen-btn">
+          <span>Book a lesson</span>
+          <svg aria-hidden="true">
+            <rect x="0" y="0" width="100%" height="100%" />
+          </svg>
+        </Link>
+        <Link to="/Contact" className="listen-btn">
+          <span>Contact</span>
+          <svg aria-hidden="true">
+            <rect x="0" y="0" width="100%" height="100%" />
+          </svg>
+        </Link>
       </div>
     </div>
   );

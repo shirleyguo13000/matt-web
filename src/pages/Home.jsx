@@ -103,11 +103,17 @@ function Home() {
         </div>
       </div>
       <div className="home-btn-div">
-        <Link to="/Listen">
-          <button className="home-btn">Listen</button>
+        <Link to="/Listen" className="home-btn">
+          <span>Listen</span>
+          <svg aria-hidden="true">
+            <rect x="0" y="0" width="100%" height="100%" />
+          </svg>
         </Link>
-        <Link to="/Contact">
-          <button className="home-btn">Contact</button>
+        <Link to="/Contact" className="home-btn">
+          <span>Contact</span>
+          <svg aria-hidden="true">
+            <rect x="0" y="0" width="100%" height="100%" />
+          </svg>
         </Link>
       </div>
     </div>
