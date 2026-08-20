@@ -1,5 +1,4 @@
 import { useState } from "react";
-import portrait from "../assets/portrait.webp";
 import PageMeta from "../components/PageMeta.jsx";
 
 const FORM_ENDPOINT = "https://formspree.io/f/xljrpybz";
@@ -107,12 +106,6 @@ function Contact() {
             <span className="G">G</span>et in touch!
           </p>
           <div className="form-parent-grid">
-            <img
-              src={portrait}
-              alt="Matthew So holding a bassoon"
-              className="contact-portrait"
-              fetchPriority="high"
-            />
             <div className="form-field">
               <label htmlFor="name">
                 Name

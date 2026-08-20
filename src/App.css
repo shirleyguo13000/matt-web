@@ -1170,25 +1170,14 @@ hr.solid {
   padding: 0;
 }
 
-/* fields flow down the left column; the portrait is pinned to the
-   right and spans all four of them */
+/* one centred column - the portrait that used to sit beside the fields
+   is gone, so there is no second track to balance */
 .form-parent-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-  gap: 1.5rem 2.5rem;
-}
-
-.contact-portrait {
-  grid-column: 2;
-  grid-row: 1 / span 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
   width: 100%;
-  height: 100%;
-  /* without this the image's intrinsic height sets a floor for the
-     rows it spans, and it would stretch the field column to match */
-  min-height: 0;
-  object-fit: cover;
-  object-position: center top;
-  border-radius: 5px;
 }
 
 /* sits inside the paper card now, so it takes the card's dark ink -
@@ -1229,7 +1218,7 @@ hr.solid {
      cap still leaves a 1920 monitor at ~70% - past that, fields get
      too wide to scan comfortably */
   width: 78%;
-  max-width: 84rem;
+  max-width: 70rem;
   margin-bottom: 7rem;
   /* more breathing room left and right than top and bottom */
   padding: clamp(2rem, 3vw, 3rem) clamp(2rem, 5vw, 4.5rem);
@@ -1343,14 +1332,21 @@ hr.solid {
 }
 
 .form-field {
+  /* label and input share this, so the label's left edge always lands
+     where the input starts - at any breakpoint */
+  --field-width: 70%;
   display: flex;
   flex-direction: column;
-  grid-column: 1 / 2;
+  /* the input is narrower than the field, so without this the flex
+     column would pack it against the left edge */
+  align-items: center;
   gap: 0.6rem;
-  text-align: left;
+  width: 100%;
 }
 
 .form-field label {
+  width: var(--field-width);
+  text-align: left;
   font-family: "Cormorant Garamond";
   font-size: 0.8rem;
   font-weight: 100;
@@ -1367,7 +1363,7 @@ hr.solid {
 .form-field input,
 .form-field select,
 .form-field textarea {
-  width: 100%;
+  width: var(--field-width);
   padding: 0.9rem 1rem;
   font-family: var(--font-body);
   font-size: 1rem;
@@ -1423,11 +1419,8 @@ hr.solid {
    treatment covers the look - this is placement, plus the ink rest
    colour it needs against the paper card */
 .contactbtn {
-  grid-column: 1 / -1;
-  justify-self: center;
-  align-self: start;
   margin-top: 3rem;
-  margin-bottom: 0;
+  margin-bottom: 3rem;
   color: #1c1c1c;
 }
 
@@ -1445,7 +1438,6 @@ hr.solid {
 
 /* holds its height so the card doesn't jump when a message appears */
 .contact-status {
-  grid-column: 1 / -1;
   min-height: 1.5rem;
   margin: 0;
   text-align: center;
@@ -1590,30 +1582,9 @@ hr.solid {
   }
 }
 
-/* ---- Contact page: portrait moves above the fields ---- */
 @media (max-width: 900px) {
-  /* single column now, so a wide card would just stretch the inputs -
-     take more of the screen but cap the line length */
   .contact-form {
     width: 86%;
-    max-width: 44rem;
-  }
-
-  .form-parent-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  /* back into the normal flow - it is first in the markup, so it
-     lands above the fields. capped on width rather than height:
-     a full-width box would crop this 3:4 portrait to a letterbox */
-  .contact-portrait {
-    grid-column: 1;
-    grid-row: auto;
-    justify-self: center;
-    width: 100%;
-    max-width: 20rem;
-    height: auto;
-    aspect-ratio: 3 / 4;
   }
 }
 
@@ -1622,18 +1593,19 @@ hr.solid {
      and let the card's own padding do the spacing */
   .contact-form {
     width: 90%;
-    max-width: none;
     gap: 1.4rem;
     margin-bottom: 5rem;
     padding: 1.75rem 1.5rem;
   }
 
-  .contact-portrait {
-    max-width: 15rem;
-  }
-
   .contactbtn {
     width: 100%;
+  }
+
+  /* 70% of an already-narrow card left a 201px input, too tight to
+     type an email into */
+  .form-field {
+    --field-width: 100%;
   }
 }
 
