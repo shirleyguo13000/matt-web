@@ -36,10 +36,7 @@
   --font-display: "Noto Serif Display", serif;
   --font-label: "Cormorant SC", serif;
   --font-body:
-    "Cormorant Garamond",
-    "Cormorant Fallback",
-    "Cormorant Fallback 2",
-    serif;
+    "Cormorant Garamond", "Cormorant Fallback", "Cormorant Fallback 2", serif;
   --font-script: "Mea Culpa", cursive;
   --font-logo: "Cinzel", serif;
 }
@@ -394,7 +391,6 @@ hr.solid {
     rgba(255, 255, 255, 0.75),
     rgba(255, 255, 255, 0)
   );
-  scroll-snap-align: start;
 }
 .bio {
   display: block;
