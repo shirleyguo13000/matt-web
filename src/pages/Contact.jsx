@@ -101,7 +101,12 @@ function Contact() {
             <span className="G">G</span>et in touch!
           </p>
           <div className="form-parent-grid">
-            <img src={portrait} alt="" className="contact-portrait" />
+            <img
+              src={portrait}
+              alt=""
+              className="contact-portrait"
+              fetchPriority="high"
+            />
             <div className="form-field">
               <label htmlFor="name">
                 Name

@@ -11,7 +11,7 @@ function Lessons() {
       <div className="lesson-grid-parent">
         <div className="lesson-card lessonbsn">
           <h2>Bassoon</h2>
-          <img src={bassoon} alt="" loading="lazy" />
+          <img src={bassoon} alt="" fetchPriority="high" />
           <p>
             More than on any other instrument, a bassoonist's success begins
             with the reed. A student can have flawless technique and beautiful
