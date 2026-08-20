@@ -280,7 +280,9 @@ function Calendar() {
           ))}
         </div>
 
-        <div className="calendar-grid" role="grid">
+        {/* no role="grid": that contract requires row children, and each
+            day is already a self-describing button */}
+        <div className="calendar-grid">
           {Array.from({ length: leading }).map((_, i) => (
             <span key={`lead-${i}`} className="calendar-cell is-empty" />
           ))}
@@ -349,7 +351,7 @@ function Calendar() {
               <ul className="calendar-modal-list">
                 {selectedEvents.map((ev, i) => (
                   <li key={ev.id || i}>
-                    <h3>{ev.title}</h3>
+                    <h2>{ev.title}</h2>
                     <p className="calendar-modal-time">
                       {ev.allDay
                         ? "All day"

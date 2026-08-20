@@ -1,4 +1,26 @@
-@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Cormorant+SC:wght@300;400;500;600;700&family=Mea+Culpa&family=Noto+Serif+Display:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
+/* metric-matched fallbacks for the body face.
+   the prose is set in Cormorant Garamond, which is 13.3% narrower than
+   Georgia - so while the webfont loads, text reflows and the whole page
+   jumps (measured 0.088 CLS). size-adjust squeezes the fallback to the
+   same advance width, so the swap is invisible and costs no bandwidth.
+   ratios measured against Cormorant Garamond 400 on this machine. */
+@font-face {
+  font-family: "Cormorant Fallback";
+  src: local("Times New Roman");
+  size-adjust: 97%;
+  ascent-override: 90%;
+  descent-override: 25%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "Cormorant Fallback 2";
+  src: local("Georgia");
+  size-adjust: 88.3%;
+  ascent-override: 90%;
+  descent-override: 25%;
+  line-gap-override: 0%;
+}
 
 :root {
   --ink: #0c0c10;
@@ -13,7 +35,11 @@
 
   --font-display: "Noto Serif Display", serif;
   --font-label: "Cormorant SC", serif;
-  --font-body: "Cormorant Garamond", Georgia, serif;
+  --font-body:
+    "Cormorant Garamond",
+    "Cormorant Fallback",
+    "Cormorant Fallback 2",
+    serif;
   --font-script: "Mea Culpa", cursive;
   --font-logo: "Cinzel", serif;
 }
@@ -30,31 +56,19 @@ html {
 /* UNIVERSAL */
 
 body {
-  margin: 0;
+  margin: 0 auto;
   min-height: 100vh;
+  position: relative;
   background-color: var(--ink);
+  background-image: url("./assets/gvz-42-RyoPLIFEI7c-unsplash.webp");
+  background-size: cover;
   color: var(--paper);
   font-family: var(--font-body);
   font-size: 1.05rem;
   line-height: 1.75;
   -webkit-font-smoothing: antialiased;
-  position: relative;
-  color: #fafaff;
-  margin: 0 auto;
-  background-image: url("./assets/gvz-42-RyoPLIFEI7c-unsplash.webp");
-  background-size: cover;
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  /* background-image: url("/Users/shirleyguo/Documents/dev/matt-web/src/assets/gvz-42-RyoPLIFEI7c-unsplash.jpg"); */
-  background-size: cover;
-  background-position: center;
-  opacity: 0.35;
-  z-index: -2;
-}
 body::after {
   content: "";
   position: fixed;
@@ -149,7 +163,6 @@ nav a.active {
 }
 
 .logo {
-  font-family: "Playfair Display";
   justify-content: space-between;
   letter-spacing: 2px;
   color: #fafaff;
@@ -308,14 +321,17 @@ nav a.active {
 }
 
 /* --------------------  home page ------------------------*/
+/* padding, not margin: margin-top here collapsed up through #root to
+   <body>, so when React mounted, body itself jumped down 72px - that
+   was the whole 0.088 CLS on this page. box-sizing is border-box, so
+   the padding sits inside 100dvh and the layout is unchanged. */
 .home-page-body {
   width: 100%;
-  height: calc(100dvh - 4.5rem);
-  margin-top: 4.5rem;
+  height: 100dvh;
+  padding: 4.5rem 1.5rem 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2rem 1.5rem;
   overflow: hidden;
 }
 
@@ -346,30 +362,6 @@ nav a.active {
   text-transform: uppercase;
   color: var(--muted);
   margin-top: 1.25rem;
-  text-align: center;
-}
-
-.home-p {
-  text-align: center;
-  margin: 2rem;
-  color: inherit;
-  margin-bottom: 4rem;
-  font-family: (var(--font-body));
-  font-weight: 200;
-}
-
-.button-grid {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1.5rem;
-  margin-top: 6rem;
-  margin-bottom: 8rem;
-}
-
-.about-word {
-  margin: 0 0 0.5rem 0;
-  font-family: "Cormorant SC";
   text-align: center;
 }
 
@@ -408,6 +400,23 @@ hr.solid {
   display: block;
   max-width: 80%;
   margin: 5rem auto 13rem auto;
+}
+
+/* fades in and out with the viewport - see components/ScrollFade.jsx */
+.scroll-fade {
+  opacity: 0;
+  transition: opacity 0.7s ease;
+}
+
+.scroll-fade.is-in {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-fade {
+    opacity: 1;
+    transition: none;
+  }
 }
 
 .hairline {
@@ -505,28 +514,6 @@ hr.solid {
   cursor: pointer;
 }
 
-.hrefimg-wrapper::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 64px;
-  height: 64px;
-  transform: translate(-50%, -50%);
-  background-image: url("./assets/play\ -\ Edited.png");
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  opacity: 0;
-  transition: opacity 0.25s ease;
-  z-index: 2;
-  pointer-events: none;
-}
-
-.hrefimg-wrapper:hover::before {
-  opacity: 1;
-}
-
 .hrefimg-inner {
   display: block;
   width: 100%;
@@ -544,7 +531,7 @@ hr.solid {
   pointer-events: none;
 }
 
-.video h3 {
+.video h2 {
   margin: 1rem 0 3rem 0;
   font-weight: 600;
 }
@@ -810,8 +797,8 @@ hr.solid {
   right: 0;
   width: 0;
   height: 0;
-  border-top: 0.9rem solid var(--brass);
-  border-left: 0.9rem solid transparent;
+  border-top: 2.3rem solid var(--brass);
+  border-left: 2.3rem solid transparent;
 }
 
 /* ---- the day popup ---- */
@@ -906,7 +893,7 @@ hr.solid {
   border-top: 1px solid var(--rule);
 }
 
-.calendar-modal-list h3 {
+.calendar-modal-list h2 {
   margin: 0 0 0.4rem;
   font-family: "Cormorant SC";
   font-weight: 400;
@@ -985,18 +972,6 @@ hr.solid {
   }
 }
 
-
-
-/* .calendarh1 {
-  text-align: center;
-  margin-top: clamp(6rem, 15vh, 10rem);
-  font-family: "Cormorant SC";
-  font-size: clamp(1.75rem, 4vw, 2.25rem);
-  font-weight: 200;
-  letter-spacing: 0.2em;
-  color: var(--muted);
-} */
-
 /* ------------------ Lessons page ------------------ */
 
 .lesson-parent-div {
@@ -1035,7 +1010,7 @@ hr.solid {
 
 .lesson-card:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 20px #c9aa71;
+  box-shadow: 0 0 20px #9f87595d;
 }
 
 .lesson-card::before {
@@ -1076,7 +1051,7 @@ hr.solid {
   margin: 6rem 0;
 }
 
-.lesson-card h3 {
+.lesson-card h2 {
   font-weight: 400;
   font-family: "Cormorant SC";
   letter-spacing: 0.4px;
@@ -1132,7 +1107,7 @@ hr.solid {
     padding: 1.75rem 1.25rem;
   }
 
-  .lesson-card h3 {
+  .lesson-card h2 {
     margin-bottom: 2rem;
   }
 

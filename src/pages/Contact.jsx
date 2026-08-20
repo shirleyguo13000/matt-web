@@ -1,5 +1,5 @@
 import { useState } from "react";
-import portrait from "../assets/portrait.jpg";
+import portrait from "../assets/portrait.webp";
 
 const FORM_ENDPOINT = "https://formspree.io/f/xljrpybz";
 

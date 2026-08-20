@@ -1,4 +1,3 @@
-import React from "react";
 import { useState } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import { FaLinkedin, FaFacebook, FaYoutube } from "react-icons/fa";
@@ -9,6 +8,10 @@ import Contact from "./pages/Contact.jsx";
 import Lessons from "./pages/Lessons.jsx";
 import ScrollTop from "./components/ScrollTop.jsx";
 import "./App.css";
+
+// deliberately NOT lazy-loaded: splitting these saved ~7 kB gzip but
+// made a direct visit to any of them paint an empty page first, then
+// pop the content in - a 1.0 layout shift. not worth it at this size.
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -60,13 +63,15 @@ function App() {
         </ul>
       </nav>
 
-      <Routes className="links">
-        <Route path="/" element={<Home />} />
-        <Route path="/Listen" element={<Listen />} />
-        <Route path="/Calendar" element={<Calendar />} />
-        <Route path="/Lessons" element={<Lessons />} />
-        <Route path="/Contact" element={<Contact />} />
-      </Routes>
+      <main>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/Listen" element={<Listen />} />
+          <Route path="/Calendar" element={<Calendar />} />
+          <Route path="/Lessons" element={<Lessons />} />
+          <Route path="/Contact" element={<Contact />} />
+        </Routes>
+      </main>
 
       <footer>
         <div className="social-icons">

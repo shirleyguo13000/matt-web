@@ -2,7 +2,6 @@ import bassoon from "../assets/bassoon.webp";
 import oboe from "../assets/oboe.webp";
 import piano from "../assets/piano.webp";
 import theory from "../assets/theory.webp";
-import { Link } from "react-router-dom";
 
 function Lessons() {
   return (
@@ -11,7 +10,7 @@ function Lessons() {
       <span className="hairline" aria-hidden />
       <div className="lesson-grid-parent">
         <div className="lesson-card lessonbsn">
-          <h3>Bassoon</h3>
+          <h2>Bassoon</h2>
           <img src={bassoon} alt="" loading="lazy" />
           <p>
             More than on any other instrument, a bassoonist's success begins
@@ -31,7 +30,7 @@ function Lessons() {
           </p>
         </div>
         <div className="lesson-card lessonpno">
-          <h3>Piano</h3>
+          <h2>Piano</h2>
           <img src={piano} alt="" loading="lazy" />
           <p>
             At the piano, the defining challenge is hand-eye coordination — our
@@ -52,8 +51,8 @@ function Lessons() {
           </p>
         </div>
         <div className="lesson-card lessonoboe">
-          <h3>Oboe</h3>
-          <img src={oboe} alt="" className="oboeimg" />
+          <h2>Oboe</h2>
+          <img src={oboe} alt="" className="oboeimg" loading="lazy" />
           <p>
             Where the bassoon favors a wide and open air stream, the oboe
             demands the opposite: a narrower, more tightly controlled,
@@ -72,13 +71,14 @@ function Lessons() {
           </p>
         </div>
         <div className="lesson-card lessontheory">
-          <h3>Music Theory & Aural</h3>
+          <h2>Music Theory & Aural</h2>
           <img src={theory} alt="" className="theoryimg" loading="lazy" />
-          <p></p>
         </div>
       </div>
       <a
-        href="https://airtable.com/appjXE1qz3E25t2u8/paghfPFN1N5vohAMR/form" target="_blank"
+        href="https://airtable.com/appjXE1qz3E25t2u8/paghfPFN1N5vohAMR/form"
+        target="_blank"
+        rel="noopener noreferrer"
         className="lessonbtn"
       >
         <span>Book a lesson</span>

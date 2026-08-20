@@ -16,6 +16,7 @@ function Listen() {
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           referrerPolicy="strict-origin-when-cross-origin"
           allowFullScreen
+          loading="lazy"
         ></iframe>
         <p>
           Elegy for Innocence for bassoon and piano by Jeff Scott. <br />
@@ -33,6 +34,7 @@ function Listen() {
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           referrerPolicy="strict-origin-when-cross-origin"
           allowFullScreen
+          loading="lazy"
         ></iframe>
         <p>
           André Jolivet: Bassoon Concerto. <br />
@@ -43,10 +45,11 @@ function Listen() {
       </div>
 
       <div className="video">
-        <h3>Lillian Fuchs Chamber Music Competition Winners' Concert</h3>
+        <h2>Lillian Fuchs Chamber Music Competition Winners' Concert</h2>
         <a
           href="https://www.msmnyc.edu/livestream/lillian-fuchs-chamber-music-winners-concert-2025-04-30/"
           target="_blank"
+          rel="noopener noreferrer"
         >
           <div className="hrefimg-wrapper">
             <img
@@ -78,6 +81,7 @@ function Listen() {
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           referrerPolicy="strict-origin-when-cross-origin"
           allowFullScreen
+          loading="lazy"
         ></iframe>
         <p>
           Symphony No. 10 by Dmitri Shostakovich.
@@ -91,10 +95,11 @@ function Listen() {
       </div>
 
       <div className="video">
-        <h3>BÉLA BARTÓK, Concerto for Orchestra, Sz 116, BB123</h3>
+        <h2>BÉLA BARTÓK, Concerto for Orchestra, Sz 116, BB123</h2>
         <a
           href="https://www.msmnyc.edu/livestream/opus130-2024-09-18/"
           target="_blank"
+          rel="noopener noreferrer"
         >
           <div className="hrefimg-wrapper">
             <img

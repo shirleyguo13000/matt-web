@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import ScrollFade from "../components/ScrollFade.jsx";
 
 function Home() {
   return (
@@ -28,30 +29,11 @@ function Home() {
             </svg>
           </Link>
         </div>
-        {/* <img
-        src="src/assets/Screenshot_20260507-151346.jpg"
-        alt="portrait of Matthew So"
-        className="portrait-one"
-      /> */}
-        {/* <p className="home-p">
-        A performer and educator dedicated to creating meaningful musical
-        experiences.
-      </p> */}
-        {/* <div className="button-grid">
-        <button className="home-btn home-btn1">Hire me</button>
-        <button className="home-btn home-btn2">Book a lesson</button>
-      </div> */}
       </div>
-      {/* -------------------add a page divider line here----------- */}
       <hr className="solid"></hr>
       <div className="bio" id="about">
         <p className="about-page-title">About</p>
-        <span className="hairline" aria-hidden />
-        {/* <img
-          src="src/assets/Screenshot_20260507-151346.jpg"
-          alt="portrait of Matthew So"
-          className="portrait-one"
-        /> */}
+        <ScrollFade as="span" className="hairline" aria-hidden />
         <div className="bio-text">
           <p>
             <span className="drop-cap">R</span>
