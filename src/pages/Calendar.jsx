@@ -1,7 +1,13 @@
 import { useState, useEffect, useRef } from "react";
 import PageMeta from "../components/PageMeta.jsx";
+import { metaFor } from "../routes.js";
 
 const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+// how many concerts a day cell previews before collapsing the rest into
+// a "+n more" line. two fits a square cell at the widths the grid hits
+// without the row growing taller than it is wide
+const PREVIEW_LIMIT = 2;
 const MONTHS = [
   "January",
   "February",
@@ -70,6 +76,68 @@ function formatTime(value, timeZone) {
   });
 }
 
+// only http(s) - a description could otherwise put javascript: or data:
+// behind the RSVP button
+function safeUrl(value) {
+  if (!value) return "";
+  try {
+    const url = new URL(String(value).trim());
+    return url.protocol === "http:" || url.protocol === "https:"
+      ? url.href
+      : "";
+  } catch {
+    return "";
+  }
+}
+
+// a labelled line wins over a loose link, so a description can mention
+// other URLs without one of them being promoted to the button
+const LABELLED_LINK =
+  /^[^\S\n]*(?:rsvp|tickets?|register|reserve|booking)[^\S\n]*[:\-\u2013\u2014][^\S\n]*(\S+)[^\S\n]*$/im;
+const LINK_WORD = /rsvp|ticket|register|reserve|book/i;
+const BARE_URL = /https?:\/\/[^\s<>"']+/i;
+
+// Google returns the description as an HTML fragment. Parse it in an
+// inert document rather than rendering it: it is Matt's own copy, but
+// DOMParser neither runs scripts nor fetches resources, and the day
+// popup wants plain text anyway.
+function parseDescription(html) {
+  if (!html) return { text: "", rsvpUrl: "" };
+
+  const doc = new DOMParser().parseFromString(html, "text/html");
+
+  const anchors = [...doc.querySelectorAll("a[href]")].map((a) => ({
+    href: a.getAttribute("href"),
+    label: a.textContent.trim(),
+  }));
+
+  // the line breaks the author typed, which textContent would swallow
+  doc.querySelectorAll("br").forEach((br) => br.replaceWith("\n"));
+  doc.querySelectorAll("p, div, li").forEach((el) => el.append("\n"));
+
+  let text = (doc.body.textContent || "").replace(/\u00a0/g, " ");
+
+  const labelled = text.match(LABELLED_LINK);
+  const rsvpUrl =
+    safeUrl(labelled?.[1]) ||
+    safeUrl(anchors.find((a) => LINK_WORD.test(a.label))?.href) ||
+    safeUrl(anchors[0]?.href) ||
+    safeUrl(text.match(BARE_URL)?.[0]);
+
+  // the button now carries the link, so drop it from the prose
+  if (labelled) text = text.replace(labelled[0], "");
+  if (rsvpUrl) text = text.split(rsvpUrl).join("");
+
+  text = text
+    .split("\n")
+    .map((line) => line.trim())
+    .join("\n")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+
+  return { text, rsvpUrl };
+}
+
 // every day an event covers, so a festival spanning a week shows on
 // each of those days rather than only the first
 function eventDayKeys(ev, calendarZone) {
@@ -104,19 +172,33 @@ function groupEvents(items, calendarZone) {
     if (ev.status === "cancelled") return;
     const zone = ev.start.timeZone || calendarZone;
     const allDay = Boolean(ev.start.date);
+    const { text, rsvpUrl } = parseDescription(ev.description);
     const entry = {
       id: ev.id,
       title: ev.summary || "Untitled event",
       location: ev.location || "",
-      description: ev.description || "",
+      description: text,
+      rsvpUrl,
       allDay,
       start: allDay ? "" : formatTime(ev.start.dateTime, zone),
       end: allDay || !ev.end?.dateTime ? "" : formatTime(ev.end.dateTime, zone),
+      // for ordering within a day. the API returns the month in start
+      // order, but a multi-day event lands on days it did not start on,
+      // where it would otherwise sort ahead of that day's own concerts
+      sortKey: allDay ? 0 : Date.parse(ev.start.dateTime) || 0,
     };
     eventDayKeys(ev, calendarZone).forEach((key) => {
       byDate[key] = byDate[key] ? [...byDate[key], entry] : [entry];
     });
   });
+
+  // all-day first, then chronological - the order the day reads in
+  Object.values(byDate).forEach((list) =>
+    list.sort((a, b) =>
+      a.allDay === b.allDay ? a.sortKey - b.sortKey : a.allDay ? -1 : 1,
+    ),
+  );
+
   return byDate;
 }
 
@@ -235,11 +317,7 @@ function Calendar() {
 
   return (
     <div className="calendar-parent-div">
-      <PageMeta
-        title="Upcoming Concerts | Matthew So"
-        description="Upcoming concerts and performances by bassoonist Matthew So in New York and beyond. Dates, venues and times."
-        path="/Calendar"
-      />
+      <PageMeta {...metaFor["/calendar"]} />
       <h1 className="calendarh1">Upcoming Concerts and Events</h1>
       <span className="hairline" aria-hidden />
 
@@ -303,11 +381,46 @@ function Calendar() {
                 key={key}
                 className={`calendar-cell calendar-day${isToday ? " is-today" : ""}${events.length ? " has-events" : ""}`}
                 onClick={(e) => openDay(day, e)}
-                aria-label={`${MONTHS[view.month]} ${day}, ${view.year}${events.length ? `, ${events.length} event${events.length > 1 ? "s" : ""}` : ""}`}
+                aria-label={`${MONTHS[view.month]} ${day}, ${view.year}${
+                  events.length
+                    ? `, ${events.length} event${events.length > 1 ? "s" : ""}: ${events
+                        .map((ev) => ev.title)
+                        .join(", ")}`
+                    : ""
+                }`}
               >
                 <span className="calendar-daynum">{day}</span>
+
+                {/* aria-hidden throughout: the button's own label already
+                    announces the count, and reading each preview would say
+                    every title twice - once here, once in the popup */}
                 {events.length > 0 && (
-                  <span className="calendar-event-corner" aria-hidden />
+                  <>
+                    <span className="calendar-day-events" aria-hidden>
+                      {events.slice(0, PREVIEW_LIMIT).map((ev, i) => (
+                        <span className="calendar-chip" key={ev.id || i}>
+                          <span className="calendar-chip-time">
+                            {ev.allDay ? "All day" : ev.start}
+                          </span>
+                          <span className="calendar-chip-title">{ev.title}</span>
+                        </span>
+                      ))}
+                      {events.length > PREVIEW_LIMIT && (
+                        <span className="calendar-chip-more">
+                          +{events.length - PREVIEW_LIMIT} more
+                        </span>
+                      )}
+                    </span>
+
+                    {/* a cell on a phone is ~45px wide, which no amount of
+                        truncation makes a title readable in - so below the
+                        breakpoint the previews are swapped for dots */}
+                    <span className="calendar-day-dots" aria-hidden>
+                      {events.slice(0, 3).map((ev, i) => (
+                        <span key={ev.id || i} />
+                      ))}
+                    </span>
+                  </>
                 )}
               </button>
             );
@@ -370,6 +483,22 @@ function Calendar() {
                     )}
                     {ev.description && (
                       <p className="calendar-modal-desc">{ev.description}</p>
+                    )}
+                    {ev.rsvpUrl && (
+                      <a
+                        className="calendar-rsvp-btn"
+                        href={ev.rsvpUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        // several concerts can share a popup, so the link
+                        // needs to say which one it books
+                        aria-label={`RSVP for ${ev.title}`}
+                      >
+                        <span>RSVP here</span>
+                        <svg aria-hidden="true">
+                          <rect x="0" y="0" width="100%" height="100%" />
+                        </svg>
+                      </a>
                     )}
                   </li>
                 ))}

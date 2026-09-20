@@ -3,18 +3,15 @@ import oboe from "../assets/oboe.webp";
 import piano from "../assets/piano.webp";
 import theory from "../assets/theory.webp";
 import PageMeta from "../components/PageMeta.jsx";
+import { metaFor } from "../routes.js";
 
 function Lessons() {
   return (
     <div className="lesson-parent-div">
-      <PageMeta
-        title="Bassoon, Oboe & Piano Lessons in New York | Matthew So"
-        description="Private bassoon, oboe, piano and music theory lessons in New York with Matthew So, Manhattan School of Music graduate. Reed-making, technique and musicianship."
-        path="/Lessons"
-      />
-      <h1 className="lessonh1">Book a Lesson</h1>
+      <PageMeta {...metaFor["/lessons"]} />
+      <h1 className="lessonh1">Bassoon, Oboe &amp; Piano Lessons in NYC</h1>
       <p className="lesson-subtitle">
-        Private bassoon, oboe, saxophone, and piano lessons in New York City
+        Private instruction with Matthew So
       </p>
       <span className="hairline" aria-hidden />
       <p className="lesson-intro">

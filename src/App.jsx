@@ -1,12 +1,14 @@
 import { useState } from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link, Navigate } from "react-router-dom";
 import { FaLinkedin, FaFacebook, FaYoutube } from "react-icons/fa";
 import Home from "./pages/Home.jsx";
 import Listen from "./pages/Listen.jsx";
 import Calendar from "./pages/Calendar.jsx";
 import Contact from "./pages/Contact.jsx";
 import Lessons from "./pages/Lessons.jsx";
+import NotFound from "./pages/NotFound.jsx";
 import ScrollTop from "./components/ScrollTop.jsx";
+import { legacyRedirects } from "./routes.js";
 import "./App.css";
 
 // deliberately NOT lazy-loaded: splitting these saved ~7 kB gzip but
@@ -52,22 +54,22 @@ function App() {
             </a>
           </li>
           <li>
-            <Link to="/Listen" onClick={closeMenu}>
+            <Link to="/listen" onClick={closeMenu}>
               Listen
             </Link>
           </li>
           <li>
-            <Link to="/Calendar" onClick={closeMenu}>
+            <Link to="/calendar" onClick={closeMenu}>
               Calendar
             </Link>
           </li>
           <li>
-            <Link to="/Lessons" onClick={closeMenu}>
+            <Link to="/lessons" onClick={closeMenu}>
               Lessons
             </Link>
           </li>
           <li>
-            <Link to="/Contact" onClick={closeMenu}>
+            <Link to="/contact" onClick={closeMenu}>
               Contact
             </Link>
           </li>
@@ -77,10 +79,24 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/Listen" element={<Listen />} />
-          <Route path="/Calendar" element={<Calendar />} />
-          <Route path="/Lessons" element={<Lessons />} />
-          <Route path="/Contact" element={<Contact />} />
+          <Route path="/listen" caseSensitive element={<Listen />} />
+          <Route path="/calendar" caseSensitive element={<Calendar />} />
+          <Route path="/lessons" caseSensitive element={<Lessons />} />
+          <Route path="/contact" caseSensitive element={<Contact />} />
+
+          {/* The capitalised URLs were live, so Netlify 301s them at the
+              HTTP level (see the generated _redirects) - that is the part
+              Google cares about. These client-side equivalents cover
+              in-app navigation and keep the SPA correct on its own if a
+              host rule ever goes missing. They are only reachable because
+              the routes above are caseSensitive: react-router matches
+              case-insensitively by default, which would otherwise render
+              /Listen in place without ever normalising the URL. */}
+          {legacyRedirects.map(({ from, to }) => (
+            <Route key={from} path={from} element={<Navigate to={to} replace />} />
+          ))}
+
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
 
