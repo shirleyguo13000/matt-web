@@ -17,8 +17,8 @@ function Home() {
           <p className="headline">Bassoonist | Oboist | Pianist | Educator</p>
         </div>
         <div className="about-transition">
-          <Link
-            to="#about"
+          <a
+            href="#about"
             className="scroll-arrow about-hover"
             aria-label="Go to About page"
           >
@@ -34,7 +34,7 @@ function Home() {
             >
               <path d="M6 10l6 6 6-6" />
             </svg>
-          </Link>
+          </a>
         </div>
       </div>
       <hr className="solid"></hr>

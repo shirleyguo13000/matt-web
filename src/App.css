@@ -440,7 +440,15 @@ hr.solid {
     display: block;
     width: 100%;
     max-width: 18rem;
-    margin: 0 auto 2rem;
+    margin: 0 auto 7rem;
+  }
+
+  .bio {
+    margin-bottom: 4rem;
+  }
+
+  .home-btn {
+    margin-bottom: 2rem;
   }
 }
 
