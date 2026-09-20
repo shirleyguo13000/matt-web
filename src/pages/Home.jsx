@@ -2,15 +2,12 @@ import { Link } from "react-router-dom";
 import ScrollFade from "../components/ScrollFade.jsx";
 import portrait from "../assets/portrait.webp";
 import PageMeta from "../components/PageMeta.jsx";
+import { metaFor } from "../routes.js";
 
 function Home() {
   return (
     <div>
-      <PageMeta
-        title="Matthew So | Bassoonist, Oboist, Pianist & Educator"
-        description="Matthew So is a bassoonist, oboist, pianist and educator based in New York, performing orchestral and chamber music and teaching privately."
-        path="/"
-      />
+      <PageMeta {...metaFor["/"]} />
       <div className="home-page-body">
         <div className="home-title-div">
           <h1 className="home-h1">Matthew So</h1>
@@ -92,19 +89,19 @@ function Home() {
           </p>
           <p>
             Today, Matthew maintains an active performance and teaching studio
-            in New York, offering private instruction in bassoon, oboe,
+            in New York City, offering private instruction in bassoon, oboe,
             saxophone, and piano.
           </p>
         </div>
       </div>
       <div className="home-btn-div">
-        <Link to="/Listen" className="home-btn">
+        <Link to="/listen" className="home-btn">
           <span>Listen</span>
           <svg aria-hidden="true">
             <rect x="0" y="0" width="100%" height="100%" />
           </svg>
         </Link>
-        <Link to="/Contact" className="home-btn">
+        <Link to="/contact" className="home-btn">
           <span>Contact</span>
           <svg aria-hidden="true">
             <rect x="0" y="0" width="100%" height="100%" />

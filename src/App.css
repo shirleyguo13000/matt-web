@@ -264,7 +264,8 @@ nav a.active {
 .home-btn,
 .lessonbtn,
 .contactbtn,
-.listen-btn {
+.listen-btn,
+.calendar-rsvp-btn {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -285,7 +286,8 @@ nav a.active {
 .home-btn span,
 .lessonbtn span,
 .contactbtn span,
-.listen-btn span {
+.listen-btn span,
+.calendar-rsvp-btn span {
   position: relative;
   z-index: 2;
 }
@@ -296,7 +298,8 @@ nav a.active {
 .home-btn svg,
 .lessonbtn svg,
 .contactbtn svg,
-.listen-btn svg {
+.listen-btn svg,
+.calendar-rsvp-btn svg {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -308,7 +311,8 @@ nav a.active {
 .home-btn rect,
 .lessonbtn rect,
 .contactbtn rect,
-.listen-btn rect {
+.listen-btn rect,
+.calendar-rsvp-btn rect {
   fill: none;
   stroke: var(--brass);
   stroke-width: 0.75;
@@ -325,7 +329,8 @@ nav a.active {
 .home-btn:hover rect,
 .lessonbtn:hover rect,
 .contactbtn:hover rect,
-.listen-btn:hover rect {
+.listen-btn:hover rect,
+.calendar-rsvp-btn:hover rect {
   stroke-width: 2;
   stroke-dasharray: 17, 352;
   stroke-dashoffset: 55;
@@ -828,17 +833,70 @@ hr.solid {
   color: var(--brass);
 }
 
-/* marks a day holding a concert: a filled brass corner in the top
-   right. a triangle built from borders rather than a background image,
-   so it stays crisp at any cell size */
-.calendar-event-corner {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 0;
-  height: 0;
-  border-top: 2.3rem solid var(--brass);
-  border-left: 2.3rem solid transparent;
+/* a day's concerts, previewed in the cell itself. min-height: 0 lets
+   the list shrink inside the square instead of pushing the row taller */
+.calendar-day-events {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  width: 100%;
+  min-height: 0;
+  margin-top: 0.75rem;
+  overflow: hidden;
+  text-align: left;
+}
+
+/* the brass rule replaces the old corner triangle as the "something is
+   on" marker - same accent, but attached to the event it belongs to */
+.calendar-chip {
+  display: block;
+  padding-left: 0.4rem;
+  border-left: 2px solid var(--brass);
+  line-height: 1.25;
+}
+
+.calendar-chip-time {
+  display: block;
+  font-family: var(--font-label);
+  font-size: clamp(0.5rem, 0.85vw, 0.62rem);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--brass);
+}
+
+/* two lines, then ellipsis: a long programme title should not be able
+   to push the rest of the day out of the cell */
+.calendar-chip-title {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+  font-size: clamp(0.6rem, 1vw, 0.75rem);
+  color: var(--paper);
+}
+
+.calendar-chip-more {
+  font-family: var(--font-label);
+  font-size: clamp(0.5rem, 0.85vw, 0.62rem);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* the phone-width marker; hidden at desktop width, where the previews
+   above carry the same information in words */
+.calendar-day-dots {
+  display: none;
+  gap: 0.2rem;
+  margin-top: 0.5rem;
+}
+
+.calendar-day-dots span {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--brass);
 }
 
 /* ---- the day popup ---- */
@@ -924,7 +982,7 @@ hr.solid {
   margin: 0;
   padding: 0;
   list-style: none;
-  text-align: left;
+  text-align: center;
 }
 
 .calendar-modal-list li + li {
@@ -958,11 +1016,32 @@ hr.solid {
 
 /* google returns descriptions with newlines, so keep them */
 .calendar-modal-desc {
-  margin: 0.6rem 0 0;
+  max-width: 30rem;
+  margin: 0.6rem auto 0;
   color: var(--paper);
   font-size: 0.95rem;
   line-height: 1.6;
   white-space: pre-line;
+}
+
+/* smaller than the page-level buttons: it sits under a single event in
+   a list, not at the end of a page. display + auto margins override the
+   shared inline-flex, which text-align alone would not centre. */
+.calendar-rsvp-btn {
+  display: flex;
+  width: 132px;
+  margin: 1.1rem auto 0.5rem;
+  padding: 0.85rem;
+  font-size: 1rem;
+}
+
+/* the shared hover dash is tuned to the 480px perimeter of the bigger
+   buttons; this one measures 357px, so the pattern is scaled by that
+   ratio to keep the same two travelling segments rather than a single
+   long one creeping round */
+.calendar-rsvp-btn:hover rect {
+  stroke-dasharray: 13, 262;
+  stroke-dashoffset: 41;
 }
 
 .calendar-status {
@@ -1006,9 +1085,13 @@ hr.solid {
     margin: 0;
   }
 
-  .calendar-event-corner {
-    border-top-width: 0.7rem;
-    border-left-width: 0.7rem;
+  /* no room for titles at this width - swap the previews for dots */
+  .calendar-day-events {
+    display: none;
+  }
+
+  .calendar-day-dots {
+    display: flex;
   }
 }
 
@@ -1684,4 +1767,56 @@ footer {
 .social-icons a:hover {
   color: #c9a86a;
   opacity: 0.85;
+}
+
+/* 404 — mirrors the contact page's heading treatment so an unknown URL
+   still lands somewhere that looks like the site */
+
+.notfound-parent-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 clamp(1.25rem, 5vw, 4rem);
+}
+
+.notfoundh1 {
+  text-align: center;
+  margin-top: clamp(10rem, 15vh, 12rem);
+  font-family: "Cormorant SC";
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  font-weight: 200;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+}
+
+.notfound-text {
+  max-width: 34rem;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.notfound-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(1rem, 4vw, 2.5rem);
+  margin: 3rem auto clamp(8rem, 20vh, 14rem);
+}
+
+/* borrows the nav's label treatment rather than the button outline -
+   these are a way back, not the page's call to action */
+.notfound-links a {
+  text-decoration: none;
+  color: var(--paper);
+  font-family: var(--font-label);
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+.notfound-links a:hover {
+  color: #c9a86a;
 }

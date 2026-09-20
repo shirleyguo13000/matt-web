@@ -1,5 +1,6 @@
 import { useState } from "react";
 import PageMeta from "../components/PageMeta.jsx";
+import { metaFor } from "../routes.js";
 
 const FORM_ENDPOINT = "https://formspree.io/f/xljrpybz";
 
@@ -71,11 +72,7 @@ function Contact() {
 
   return (
     <div className="contact-parent-div">
-      <PageMeta
-        title="Contact | Matthew So"
-        description="Get in touch with Matthew So to book a lesson, enquire about a performance or engagement, or ask a question."
-        path="/Contact"
-      />
+      <PageMeta {...metaFor["/contact"]} />
       <h1 className="contacth1">Contact</h1>
       <span className="hairline" aria-hidden />
 
