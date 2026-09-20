@@ -40,6 +40,17 @@ function App() {
         </button>
 
         <ul className={menuOpen ? "open" : ""}>
+          <li className="nav-social">
+            <a
+              href="https://www.youtube.com/@matttbassoon"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Matthew So on YouTube"
+              onClick={closeMenu}
+            >
+              <FaYoutube aria-hidden="true" />
+            </a>
+          </li>
           <li>
             <Link to="/Listen" onClick={closeMenu}>
               Listen

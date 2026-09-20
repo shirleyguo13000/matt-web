@@ -121,6 +121,7 @@ nav ul {
   display: flex;
   list-style-type: none;
   gap: 1.3rem;
+  align-items: center;
 }
 
 nav a {
@@ -157,6 +158,20 @@ nav a.active::after {
 }
 nav a.active {
   color: var(--brass);
+}
+
+.nav-social svg {
+  width: 2rem;
+  height: 1.5rem;
+}
+
+.nav-social a {
+  display: flex;
+  align-items: center;
+}
+
+.nav-social {
+  margin-right: 0.6rem;
 }
 
 .logo {
